@@ -9,7 +9,7 @@
 
         Study::Log::Init();
         STUDY_CORE_WARN("Testando o core logger");
-        STUDY_INFO("Tesando o Client logger");
+        STUDY_INFO("Testando o Client logger");
 
         auto app = Study::CreateApplication();
         app->run();
