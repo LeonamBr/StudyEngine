@@ -7,16 +7,16 @@
 			"command": "C:\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
+				"-DSTUDY_WINDOWS",
+				"-DSTUDY_DLL_BUILD",
 				"-std=c++20",
 				"-I${workspaceFolder}\\include",
+				"-IC:\\Users\\leona\\OneDrive\\Área de Trabalho\\Game_engine_vscode\\StudyEngine\\src",
 				"${workspaceFolder}\\*.cpp",
 				"-o",
-				"${fileDirname}\\Output.exe",
+				"${fileDirname}\\studyEngine.exe",
 				"-L${workspaceFolder}\\lib",
-				"-lglew32",
-				"-lglfw3",
-				"-lgdi32",
-				"-lopengl32"
+				"-lstudy"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -24,7 +24,10 @@
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"detail": "compiler: C:\\mingw64\\bin\\g++.exe"
 		}
 	]
