@@ -4,6 +4,7 @@
 // ----------Applicaiton----------------------
 
 #include "Engine/Application.h"
+#include "Engine/Log.h"
 
 // ----------entry point --------------------
 
