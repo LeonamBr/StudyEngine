@@ -32,5 +32,4 @@
 *.app
 
 #vscode
-/Application/.vscode
-/StudyEngine/.vscode
+.vscode/
