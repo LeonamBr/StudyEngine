@@ -3,6 +3,8 @@
 
 #include "../../Engine/Window.h"
 
+#include <GLAD/glad.c>
+
 #include <GLFW/glfw3.h>
 
 namespace Study{
