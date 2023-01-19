@@ -7,7 +7,7 @@
 
 namespace Study {
 
-    class STUDY_API KeyEvent : Event
+    class STUDY_API KeyEvent : public Event
     {
 
         public:
@@ -38,8 +38,8 @@ namespace Study {
             {
 
                 std::stringstream ss;
-                ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount; << " repeats)";
-                sturn ss.str();
+                ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
+                return ss.str();
 
             }
 
@@ -58,11 +58,16 @@ namespace Study {
 
             }
 
+        std::string ToString() const override
+        {
+
             std::stringstream ss;
             ss << "KeyReleasedEvent: " << m_KeyCode;
             return ss.str();
+        }
 
             EVENT_CLASS_TYPE(kReleased)
+
     };
 
 }

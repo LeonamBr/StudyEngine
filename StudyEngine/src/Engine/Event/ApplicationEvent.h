@@ -37,6 +37,8 @@ namespace Study{
     class STUDY_API WindowCloseEvent : public Event
     {
 
+        public: 
+        
         WindowCloseEvent(){
 
         }

@@ -1,6 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include "../../Headers.h"
+
 #include "../Core.h"
 
 #include <string>

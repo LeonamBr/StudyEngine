@@ -29,7 +29,7 @@ namespace Study{
         private:
             GLFWwindow* m_Window;
 
-            struct Windowdata{
+            struct WindowData{
                 
                 std::string Title;
                 unsigned int Width, Height;
@@ -39,7 +39,7 @@ namespace Study{
 
             };
 
-            Windowdata m_Data;
+            WindowData m_Data;
 
     };
 

@@ -49,7 +49,7 @@ namespace Study{
             std::string ToString() const override{
 
                 std::stringstream ss;
-                ss << "MouseScrolledEvent: " << GetXOffser() << ", " << GetYOffset();
+                ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
                 return ss.str();
 
             }
@@ -62,18 +62,18 @@ namespace Study{
 
     };
 
-    class STUDY_API MouseButtonEvent : Event 
+    class STUDY_API MouseButtonEvent : public Event 
     {
 
         public:
 
-            inline int GetMouseButton() const { return m_Button }
+            inline int GetMouseButton() const { return m_Button; }
 
             EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
         protected:
 
-            MouseButtonEvent(int button) : m_Button {
+            MouseButtonEvent(int button) : m_Button(button) {
 
             }
 
