@@ -2,6 +2,8 @@
 #define APPLICATION_H
 
 #include "Core.h"
+#include "Event/Event.h"
+#include "Window.h"
 
 namespace Study{
 
@@ -12,6 +14,10 @@ namespace Study{
             virtual ~Application();
 
             void run();
+        
+        private:
+            std::unique_ptr<Window> m_Window;
+            bool m_Running = true;
 
     };
 
