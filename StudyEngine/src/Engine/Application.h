@@ -2,6 +2,8 @@
 #define APPLICATION_H
 
 #include "Core.h"
+
+#include "LayerStack.h"
 #include "Event/Event.h"
 #include "Event/ApplicationEvent.h"
 
@@ -18,6 +20,9 @@ namespace Study{
             void run();
 
             void OnEvent(Event& e);
+
+            void PushLayer(Layer* layer);
+            void PushOverlay(Layer* overlay);
         
         private:
 
@@ -25,6 +30,7 @@ namespace Study{
 
             std::unique_ptr<Window> m_Window;
             bool m_Running = true;
+            LayerStack m_LayerStack;
 
     };
 

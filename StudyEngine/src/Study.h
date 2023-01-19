@@ -1,9 +1,10 @@
 #ifndef STUDY_H
 #define STUDY_H
 
-// ----------Applicaiton----------------------
+// ----------Application----------------------
 
 #include "Engine/Application.h"
+#include "Engine/Layer.h"
 #include "Engine/Log.h"
 
 // ----------entry point --------------------
