@@ -15,7 +15,7 @@ namespace Study{
         None = 0,
         WinClose, WinResize, WinFocus, WinLFocus, WinMoved,
         ApiTick, ApiUpdate, ApiRender,
-        kPressed, kReleased,
+        kPressed, kReleased, kTyped,
         MBPressed, MBReleased, Moved, Scrolled
 
     };

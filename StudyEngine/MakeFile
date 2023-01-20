@@ -3,7 +3,7 @@
 dllmake:
 	echo "Criando dll..."
 
-	g++ -c -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20  "-Iinclude"  "src\\*.cpp" "src\\Engine\\*.cpp" "src\\Engine\\imGui\\*.cpp" "src\\Platform\\Windows\\*.cpp" "src\\Platform\\OpenGL\\*.cpp" "include\\imGUI\\*.cpp"
+	g++ -c -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20  "-Iinclude"  "src\\*.cpp" "src\\Engine\\*.cpp" "src\\Engine\\imGui\\*.cpp" "src\\Platform\\Windows\\*.cpp" "src\\Platform\\OpenGL\\*.cpp" "include\\imGUI\\*.cpp" "include\\GLAD\\*.c"
 	g++ -shared -o study.dll *.o -Wl,--out-implib,study.a "-Llib" -lglew32 -lglfw3 -lgdi32 -lopengl32
 	del "*.o"
 
@@ -13,5 +13,6 @@ dllmake:
 	del "..\Application\lib\study.dll" "..\Application\lib\study.a"
 
 	copy "study.dll" "..\Application\"
+	copy "lib\glfw3.dll" "..\Application\"
 	move "study.dll" "..\Application\lib\"
 	move "study.a" "..\Application\lib\"

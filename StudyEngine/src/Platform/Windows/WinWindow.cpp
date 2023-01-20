@@ -1,11 +1,13 @@
 #include "../../Headers.h"
 #include "WinWindow.h"
 
+#include <GLAD/glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "../../Engine/Event/ApplicationEvent.h"
 #include "../../Engine/Event/MouseEvent.h"
 #include "../../Engine/Event/KeyEvent.h"
 
-#include <GLAD/glad/glad.h>
 
 namespace Study{
 
@@ -108,6 +110,16 @@ namespace Study{
             }
 
         });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int key){
+
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            KeyTypedEvent event(key);
+
+            data.EventCallback(event);
+
+        });
+
 
         glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods){
 

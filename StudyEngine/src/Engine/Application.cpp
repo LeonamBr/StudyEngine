@@ -3,11 +3,9 @@
 #include "Application.h"
 #include "Log.h"
 
-#include <GLAD/glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace Study{
-
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application* Application::s_Instance = nullptr;
 
@@ -17,7 +15,7 @@ namespace Study{
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
-        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        m_Window->SetEventCallback(STUDY_BIND_EVENT_FN(Application::OnEvent));
     }
 
     Application::~Application(){
@@ -42,7 +40,7 @@ namespace Study{
 
         EventDispatcher dispatcher(e);
 
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(STUDY_BIND_EVENT_FN(Application::OnWindowClose));
 
 
         for(auto it = m_LayerStack.end(); it!= m_LayerStack.begin(); ){
@@ -60,6 +58,9 @@ namespace Study{
 
         while(m_Running)
         {
+
+            glClearColor(0, 0, 0, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
 
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate();
