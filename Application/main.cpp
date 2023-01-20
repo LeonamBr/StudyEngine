@@ -8,11 +8,21 @@ class LayerTest : public Study::Layer{
         }
 
         void OnUpdate() override{
-            STUDY_INFO("TestLayer::Layer");
+            if(Study::Input::IsKeyPressed(STUDY_KEY_SPACE))
+                STUDY_TRACE("Space key has pressed");
         }
 
         void OnEvent(Study::Event& event) override{
-            STUDY_TRACE("{0}", event);
+
+            if(event.GetEventType() == Study::EventType::kPressed){
+            
+                if(Study::Input::IsKeyPressed(STUDY_KEY_SPACE))
+                STUDY_TRACE("Space key has pressed");
+                else {
+                Study::KeyPressedEvent& e = (Study::KeyPressedEvent&)event;
+                STUDY_TRACE("{0}", (char)e.GetKeyCode());
+                }
+            }
         }
 
 };

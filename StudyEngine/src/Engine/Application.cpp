@@ -3,7 +3,9 @@
 #include "Application.h"
 #include "Log.h"
 
-#include <GLFW/glfw3.h>
+#include <GLAD/glad/glad.h>
+
+#include "Input.h"
 
 namespace Study{
 
@@ -64,7 +66,7 @@ namespace Study{
 
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate();
-            
+
             m_Window->OnUpdate();
         }
 
