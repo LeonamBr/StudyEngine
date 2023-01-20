@@ -1,8 +1,6 @@
 #include "../../Headers.h"
 #include "WinWindow.h"
 
-#include <GLAD/glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "../../Engine/Event/ApplicationEvent.h"
 #include "../../Engine/Event/MouseEvent.h"
