@@ -5,6 +5,8 @@
 #include "../../Engine/Event/MouseEvent.h"
 #include "../../Engine/Event/KeyEvent.h"
 
+#include <GLAD/glad/glad.h>
+
 namespace Study{
 
     static bool s_GLFWInitialized = false;

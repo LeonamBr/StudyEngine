@@ -23,6 +23,7 @@ class TestAPI : public Study::Application{
         TestAPI(){
 
             PushLayer(new LayerTest());
+            PushOverlay(new Study::ImGuiLayer());
 
         }
         ~TestAPI(){}
