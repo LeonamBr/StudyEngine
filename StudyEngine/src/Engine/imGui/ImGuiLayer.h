@@ -4,7 +4,6 @@
 #include "../Core.h"
 
 #include "../Layer.h"
-#include "../../Platform/OpenGL/GlRender.h"
 
 #include "../Event/ApplicationEvent.h"
 #include "../Event/KeyEvent.h"
@@ -18,21 +17,12 @@ namespace Study {
             ImGuiLayer();
             ~ImGuiLayer();
 
-            void OnAttach();
-            void OnDetach();
-            void OnUpdate();
-            void OnEvent(Event& event);
+           virtual void OnAttach() override;
+           virtual void OnDetach() override;
+           virtual void OnImGuiRender() override;
 
-        private:
-
-            bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& event);
-            bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-            bool OnMouseMovedEvent(MouseMovedEvent& e);
-            bool OnMouseScrolledEvent(MouseScrolledEvent& e);
-            bool OnKeyPressedEvent(KeyPressedEvent& e);
-            bool OnKeyReleaseEvent(KeyReleaseEvent& e);
-            bool OnKeyTypedEvent(KeyTypedEvent& e);
-            bool OnWindowResizeEvent(WindowResizeEvent& e);
+           void Begin();
+           void End();
 
         private:
 

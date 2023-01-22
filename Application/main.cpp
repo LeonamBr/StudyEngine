@@ -1,4 +1,5 @@
-#include <Study.h>
+#include "../StudyEngine/src/Study.h"
+
 
 class LayerTest : public Study::Layer{
 
@@ -8,8 +9,11 @@ class LayerTest : public Study::Layer{
         }
 
         void OnUpdate() override{
-            if(Study::Input::IsKeyPressed(STUDY_KEY_SPACE))
-                STUDY_TRACE("Space key has pressed");
+            
+        }
+
+        virtual void OnImGuiRender() override{
+
         }
 
         void OnEvent(Study::Event& event) override{
@@ -33,7 +37,6 @@ class TestAPI : public Study::Application{
         TestAPI(){
 
             PushLayer(new LayerTest());
-            PushOverlay(new Study::ImGuiLayer());
 
         }
         ~TestAPI(){}
