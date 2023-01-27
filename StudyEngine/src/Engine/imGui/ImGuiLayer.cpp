@@ -3,8 +3,8 @@
 #include "ImGuiLayer.h"
 #include <imGui/imgui.h>
 
-#include "../../Platform/OpenGL/imgui_impl_opengl3.h"
-#include "../../Platform/OpenGL/imgui_impl_glfw.h"
+#include <imGui/imgui_impl_opengl3.h>
+#include <imGui/imgui_impl_glfw.h>
 
 
 

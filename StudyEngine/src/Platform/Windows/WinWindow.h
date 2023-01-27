@@ -2,8 +2,9 @@
 #define WINWINDOW_H
 
 #include "../../Engine/Window.h"
+#include "../../Engine/Renderer/GraphicsContext.h"
 
-#include <GLAD/glad/glad.h>
+
 #include <GLFW/glfw3.h>
 
 namespace Study{
@@ -31,6 +32,7 @@ namespace Study{
 
         private:
             GLFWwindow* m_Window;
+            GraphicsContext* m_Context;
 
             struct WindowData{
                 

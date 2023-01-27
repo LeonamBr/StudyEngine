@@ -6,6 +6,8 @@
 #include "../../Engine/Event/MouseEvent.h"
 #include "../../Engine/Event/KeyEvent.h"
 
+#include "../OpenGL/GLContext.h"
+
 
 namespace Study{
 
@@ -40,6 +42,7 @@ namespace Study{
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
 
+
         STUDY_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
         if(!s_GLFWInitialized){
@@ -53,9 +56,11 @@ namespace Study{
         }
 
         m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        STUDY_CORE_ASSERT(status, "Failed to initialize Glad!");
+        
+        
+        m_Context = new GLContext(m_Window);
+        m_Context->Init() ;
+        
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
@@ -169,7 +174,8 @@ namespace Study{
 	void WinWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
+
 	}
 
 	void WinWindow::SetVSync(bool enabled)

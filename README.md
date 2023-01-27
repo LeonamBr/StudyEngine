@@ -15,7 +15,7 @@ A game engine with learning pourpose
 :white_check_mark: GUI layers configured  
 ✅: Events configuration  
 ✅: GUI docking and viewport  
-🕐: Renderer Abstraction  
+:white_check_mark: Renderer Abstraction  
 🕐: Renderer context  
 🕐: OPENGL shaders  
 🕐: Render API  
