@@ -37,6 +37,8 @@ namespace Study{
             ImGuiLayer* m_ImGuiLayer;
             bool m_Running = true;
             LayerStack m_LayerStack;
+
+            unsigned int m_VArray, m_VBuffer, m_IndexBuffer;
         
         private:
             static Application* s_Instance;

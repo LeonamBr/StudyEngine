@@ -18,6 +18,10 @@ namespace Study {
         glfwMakeContextCurrent(m_Window);
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         STUDY_CORE_ASSERT(status, "Failed to initialize Glad!");
+        STUDY_CORE_INFO("OpenGL: ");
+        STUDY_CORE_INFO("Vendor: {0}", (char*)glGetString(GL_VENDOR));
+        STUDY_CORE_INFO("Renderer: {0}", (char*)glGetString(GL_RENDERER));
+        STUDY_CORE_INFO("Version: {0}", (char*)glGetString(GL_VERSION));
 
     }
 
