@@ -8,6 +8,8 @@
 #include "Event/ApplicationEvent.h"
 
 #include "imGui/ImGuiLayer.h"
+#include "Renderer/Shader.h"
+#include "Renderer/Buffer.h"
 
 #include "Window.h"
 
@@ -38,7 +40,10 @@ namespace Study{
             bool m_Running = true;
             LayerStack m_LayerStack;
 
-            unsigned int m_VArray, m_VBuffer, m_IndexBuffer;
+            unsigned int m_VArray;
+            std::unique_ptr<Shader> m_Shader;
+            std::unique_ptr<VertexBuffer> m_VBuffer;
+            std::unique_ptr<IndexBuffer> m_IBuffer;
         
         private:
             static Application* s_Instance;
