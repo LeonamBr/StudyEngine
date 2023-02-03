@@ -20,7 +20,7 @@ A game engine with learning pourpose
 :white_check_mark::: OPENGL shaders  
 :white_check_mark::: Render API  
 :white_check_mark::: Vertex Buffer
-🕐: Vertex Buffer Layouts  
+:white_check_mark::: Vertex Buffer Layouts  
 🕐: Vertex Array  
 🕐: Cameras  
 🕐: Delta Time  
