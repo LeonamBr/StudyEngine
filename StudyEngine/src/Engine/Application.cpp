@@ -5,6 +5,8 @@
 
 #include <GLAD/glad/glad.h>
 
+#include "Renderer/Renderer.h"
+
 #include "Input.h"
 
 namespace Study{
@@ -130,12 +132,16 @@ namespace Study{
         while(m_Running)
         {
 
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+            RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
+			RendererCommand::Clear();
+            
+            Renderer::BeginScene();
 
             m_Shader->Bind();
-            m_VArray->Bind();
-            glDrawElements(GL_TRIANGLES, m_IBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+            Renderer::Submit(m_VArray);
+
+            Renderer::EndScene();
+
 
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate();

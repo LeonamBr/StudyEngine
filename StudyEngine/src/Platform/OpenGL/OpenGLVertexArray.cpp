@@ -57,7 +57,7 @@ namespace Study {
 
     void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer) {
 
-        STUDY_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has nop layout");
+        STUDY_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has not a layout");
 
         glBindVertexArray(m_RendererID);
         vertexBuffer->Bind();
@@ -66,7 +66,7 @@ namespace Study {
         const auto& layout = vertexBuffer->GetLayout();
         for (const auto& element : layout){
 
-            glEnableVertexArrayAttrib(index);
+            glEnableVertexAttribArray(index);
             glVertexAttribPointer(index,
                                   element.GetComponentCount(),
                                   ShaderDataTypeToOpenGLBaseType(element.Type),
@@ -76,7 +76,7 @@ namespace Study {
             index++;
         }
 
-        m_VertexBuffer.push_back(vertexBuffer);
+        m_VertexBuffers.push_back(vertexBuffer);
 
     }
 

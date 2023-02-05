@@ -11,9 +11,8 @@ namespace Study {
 
         switch(Renderer::GetAPI()){
 
-            case RendererAPI::None: STUDY_CORE_ASSERT(false, "RendererAPI is not suported!"); return nullptr;
-            case RendererAPI::OpenGL: return new OpenGLVertexArray();
-
+            case RendererAPI::API::None: STUDY_CORE_ASSERT(false, "RendererAPI is not suported!"); return nullptr;
+            case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
 
         }
 
