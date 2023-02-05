@@ -10,6 +10,7 @@
 #include "imGui/ImGuiLayer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
+#include "Renderer/VertexArray.h"
 
 #include "Window.h"
 
@@ -40,10 +41,10 @@ namespace Study{
             bool m_Running = true;
             LayerStack m_LayerStack;
 
-            unsigned int m_VArray;
-            std::unique_ptr<Shader> m_Shader;
-            std::unique_ptr<VertexBuffer> m_VBuffer;
-            std::unique_ptr<IndexBuffer> m_IBuffer;
+            std::shared_ptr<Shader> m_Shader;
+            std::shared_ptr<VertexBuffer> m_VBuffer;
+            std::shared_ptr<IndexBuffer> m_IBuffer;
+            std::shared_ptr<VertexArray> m_VArray;
         
         private:
             static Application* s_Instance;

@@ -9,7 +9,7 @@ namespace Study {
 
     };
 
-    class Renderer {
+    class STUDY_API Renderer {
 
         public:
             inline static RendererAPI GetAPI() { return s_RendererAPI; } 

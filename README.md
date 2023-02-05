@@ -17,10 +17,10 @@ A game engine with learning pourpose
 ✅: GUI docking and viewport  
 :white_check_mark:: Renderer Abstraction  
 :white_check_mark:: Renderer context  
-:white_check_mark::: OPENGL shaders  
-:white_check_mark::: Render API  
-:white_check_mark::: Vertex Buffer
-:white_check_mark::: Vertex Buffer Layouts  
+:white_check_mark:: OPENGL shaders  
+:white_check_mark:: Render API  
+:white_check_mark:: Vertex Buffer 
+:white_check_mark:: Vertex Buffer Layouts  
 🕐: Vertex Array  
 🕐: Cameras  
 🕐: Delta Time  
