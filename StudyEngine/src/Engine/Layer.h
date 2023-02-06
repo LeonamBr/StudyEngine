@@ -2,6 +2,7 @@
 #define LAYER_H
 
 #include "Core.h"
+#include "Core/Timer.h"
 #include "Event/Event.h"
 
 namespace Study {
@@ -16,7 +17,7 @@ namespace Study {
 
                 virtual void OnAttach() {}
                 virtual void OnDetach() {}
-                virtual void OnUpdate() {}
+                virtual void OnUpdate(Timer timestep) {}
                 virtual void OnImGuiRender() {}
                 virtual void OnEvent(Event& event) {}
 

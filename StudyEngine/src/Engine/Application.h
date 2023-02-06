@@ -13,6 +13,8 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/OrthographicCamera.h"
 
+#include "Core/Timer.h"
+
 #include "Window.h"
 
 namespace Study{
@@ -36,12 +38,15 @@ namespace Study{
         private:
 
             bool OnWindowClose(WindowCloseEvent& e);
+        
+        private:
 
             std::unique_ptr<Window> m_Window;
             ImGuiLayer* m_ImGuiLayer;
             bool m_Running = true;
             LayerStack m_LayerStack;
-        
+            float m_LastTime;
+
         private:
             static Application* s_Instance;
 

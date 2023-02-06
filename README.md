@@ -23,7 +23,7 @@ A game engine with learning pourpose
 :white_check_mark:: Vertex Buffer Layouts  
 :white_check_mark:: Vertex Array  
 :white_check_mark:: Cameras  
-🕐: Delta Time  
+:white_check_mark:: Delta Time  
 🕐: Transform  
 
 ...  

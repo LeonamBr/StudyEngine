@@ -9,6 +9,8 @@
 
 #include "Input.h"
 
+#include <GLFW/glfw3.h>
+
 
 namespace Study{
 
@@ -68,8 +70,12 @@ namespace Study{
         while(m_Running)
         {
 
+            float time = (float)glfwGetTime();
+            Timer timestep = time - m_LastTime;
+            m_LastTime = time;
+
             for (Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+                layer->OnUpdate(timestep);
 
             m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)

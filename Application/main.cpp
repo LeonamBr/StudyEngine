@@ -75,24 +75,23 @@ class LayerTest : public Study::Layer{
 
         }
 
-        void OnUpdate() override{
+        void OnUpdate(Study::Timer timestep) override{
 
-            float x = 0.0f, y = 0.0f;
 
             if(Study::Input::IsKeyPressed(STUDY_KEY_LEFT))
-                m_CameraPosition.x -= m_CameraMoveSpeed;
+                m_CameraPosition.x -= m_CameraMoveSpeed*timestep;
             else if(Study::Input::IsKeyPressed(STUDY_KEY_RIGHT))
-                m_CameraPosition.x += m_CameraMoveSpeed;
+                m_CameraPosition.x += m_CameraMoveSpeed*timestep;
 
             if(Study::Input::IsKeyPressed(STUDY_KEY_UP))
-                m_CameraPosition.y += m_CameraMoveSpeed;
+                m_CameraPosition.y += m_CameraMoveSpeed*timestep;
             else if(Study::Input::IsKeyPressed(STUDY_KEY_DOWN))
-                m_CameraPosition.y -= m_CameraMoveSpeed;
+                m_CameraPosition.y -= m_CameraMoveSpeed*timestep;
 
             if(Study::Input::IsKeyPressed(STUDY_KEY_A))
-                m_CameraRotation += m_CameraRotationMoveSpeed;
+                m_CameraRotation += m_CameraRotationMoveSpeed*timestep;
             if(Study::Input::IsKeyPressed(STUDY_KEY_D))
-                m_CameraRotation -= m_CameraRotationMoveSpeed;
+                m_CameraRotation -= m_CameraRotationMoveSpeed*timestep;
             if(Study::Input::IsKeyPressed(STUDY_KEY_S)){
                 m_CameraPosition.x = 0.0f;
                 m_CameraPosition.y = 0.0f; 
@@ -130,9 +129,9 @@ class LayerTest : public Study::Layer{
         Study::OrthographicCamera m_Camera;
         glm::vec3 m_CameraPosition;
 
-        float m_CameraMoveSpeed = 0.05f;
+        float m_CameraMoveSpeed = 2.5f;
         float m_CameraRotation = 0.0f;
-        float m_CameraRotationMoveSpeed = 2.0f;
+        float m_CameraRotationMoveSpeed = 180.0f;
 
 };
 
