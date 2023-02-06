@@ -13,6 +13,5 @@ dllmake:
 	del "..\Application\lib\study.dll" "..\Application\lib\study.a"
 
 	copy "study.dll" "..\Application\"
-	copy "lib\glfw3.dll" "..\Application\"
 	move "study.dll" "..\Application\lib\"
 	move "study.a" "..\Application\lib\"

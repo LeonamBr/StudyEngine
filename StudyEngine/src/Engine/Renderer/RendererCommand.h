@@ -1,11 +1,11 @@
-#ifndef RENDERCOMANDO_H
-#define RENDERERCOMANDO_H
+#ifndef RENDERERCOMMAND_H
+#define RENDERERCOMMAND_H
 
 #include "RendererAPI.h"
 
 namespace Study{
 
-    class RendererCommand{
+    class STUDY_API RendererCommand{
 
         public:
 

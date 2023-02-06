@@ -11,6 +11,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Buffer.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/OrthographicCamera.h"
 
 #include "Window.h"
 
@@ -40,11 +41,6 @@ namespace Study{
             ImGuiLayer* m_ImGuiLayer;
             bool m_Running = true;
             LayerStack m_LayerStack;
-
-            std::shared_ptr<Shader> m_Shader;
-            std::shared_ptr<VertexBuffer> m_VBuffer;
-            std::shared_ptr<IndexBuffer> m_IBuffer;
-            std::shared_ptr<VertexArray> m_VArray;
         
         private:
             static Application* s_Instance;
