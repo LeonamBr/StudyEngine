@@ -25,8 +25,8 @@ A game engine with learning pourpose
 ✅: Cameras  
 ✅: Delta Time  
 ✅: Transform  
-🕛: Shader abstraction 
-🕛: texture
+🕛: Shader abstraction  
+🕛: texture  
 🕛: Blending
 
 ...  
