@@ -1,10 +1,12 @@
 #include "../StudyEngine/src/Study.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 
 class LayerTest : public Study::Layer{
 
     public:
-        LayerTest() : Layer("Test!"), m_Camera(-1.0f, 1.0f, -1.0f, 1.0f), m_CameraPosition(0.0f) {
+        LayerTest() : Layer("Test!"), m_Camera(-1.0f, 1.0f, -1.0f, 1.0f), m_CameraPosition(0.0f), m_TrianglePosition(0.0f) {
 
             m_VArray.reset(Study::VertexArray::Create());
 
@@ -38,6 +40,7 @@ class LayerTest : public Study::Layer{
             layout(location = 1) in vec4 a_Color;
 
             uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
 
             out vec3 v_Position;
             out vec4 v_Color;
@@ -47,7 +50,7 @@ class LayerTest : public Study::Layer{
                 v_Position = a_Position;
                 v_Color = a_Color;
 
-                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 
             }
 
@@ -98,6 +101,16 @@ class LayerTest : public Study::Layer{
                 m_CameraRotation = 0.0f;
                 }  
 
+            if(Study::Input::IsKeyPressed(STUDY_KEY_J))
+                m_TrianglePosition.x -= m_TriangleMoveSpeed*timestep;
+            else if(Study::Input::IsKeyPressed(STUDY_KEY_L))
+                m_TrianglePosition.x += m_TriangleMoveSpeed*timestep;
+
+            if(Study::Input::IsKeyPressed(STUDY_KEY_I))
+                m_TrianglePosition.y += m_TriangleMoveSpeed*timestep;
+            else if(Study::Input::IsKeyPressed(STUDY_KEY_K))
+                m_TrianglePosition.y -= m_TriangleMoveSpeed*timestep;
+
             Study::RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 			Study::RendererCommand::Clear();
 
@@ -105,7 +118,11 @@ class LayerTest : public Study::Layer{
             m_Camera.SetRotation(m_CameraRotation);
             
             Study::Renderer::BeginScene(m_Camera);
-            Study::Renderer::Submit(m_Shader, m_VArray);
+
+            glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
+
+
+            Study::Renderer::Submit(m_Shader, m_VArray, transform);
             Study::Renderer::EndScene();
             
         }
@@ -132,6 +149,9 @@ class LayerTest : public Study::Layer{
         float m_CameraMoveSpeed = 2.5f;
         float m_CameraRotation = 0.0f;
         float m_CameraRotationMoveSpeed = 180.0f;
+
+        glm::vec3 m_TrianglePosition;
+        float m_TriangleMoveSpeed = 0.5f;
 
 };
 
