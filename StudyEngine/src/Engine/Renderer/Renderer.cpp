@@ -2,11 +2,20 @@
 
 #include "Renderer.h"
 
+#include "../../Platform/OpenGL/OpenGLShader.h"
+
 namespace Study {
 
     Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
 
-    void Renderer::BeginScene(OrthographicCamera& camera)
+    void Renderer::Init()
+    {
+
+        RendererCommand::Init();
+
+    }
+
+    void Renderer::BeginScene(OrthographicCamera &camera)
     {
         m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
     }
@@ -15,12 +24,12 @@ namespace Study {
     {
     }
 
-    void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray> &vertexArray, const glm::mat4& transform)
+    void Renderer::Submit(const Shared<Shader>& shader, const Shared<VertexArray> &vertexArray, const glm::mat4& transform)
     {
 
         shader->Bind();
-        shader->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-        shader->UploadUniformMat4("u_Transform", transform);
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 
         vertexArray->Bind();
         RendererCommand::DrawIndex(vertexArray);

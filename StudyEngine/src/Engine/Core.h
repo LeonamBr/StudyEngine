@@ -1,6 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include <memory>
+
 #ifdef STUDY_WINDOWS
     #ifdef STUDY_DLL_BUILD
         #define STUDY_API __declspec(dllexport)
@@ -22,5 +24,15 @@
 #define BIT(x) (1 << x)
 
 #define STUDY_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
+namespace Study {
+
+    template<typename T>
+    using Unique = std::unique_ptr<T>;
+
+    template<typename T>
+    using Shared = std::shared_ptr<T>;
+
+}
 
 #endif

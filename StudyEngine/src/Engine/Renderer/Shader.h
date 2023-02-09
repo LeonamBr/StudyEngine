@@ -2,30 +2,21 @@
 #define SHADER_H
 
 #include <string>
-#include <glm/glm.hpp>
 
 namespace Study{
 
     class STUDY_API Shader {
         public:
 
-            Shader(const std::string vertex, const std::string fragment);
-            ~Shader();
+            ~Shader() = default;
 
-            void Bind() const;
-            void Unbind() const;
+            virtual void Bind() const = 0;
+            virtual void Unbind() const = 0;
 
-            void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
-
-        private:
-
-            uint32_t m_RendererID;
+            static Shader* Create(const std::string vertex, const std::string fragment);
 
     };
 
 }
-
-
-
 
 #endif

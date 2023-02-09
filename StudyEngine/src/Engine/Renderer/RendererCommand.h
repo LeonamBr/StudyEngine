@@ -9,6 +9,10 @@ namespace Study{
 
         public:
 
+            inline static void Init(){
+                s_RendererAPI->Init();
+            }
+
             inline static void SetClearColor(const glm::vec4& color){
                 s_RendererAPI->SetClearColor(color);
             }
@@ -19,7 +23,7 @@ namespace Study{
 
             }
 
-            inline static void DrawIndex(const std::shared_ptr<VertexArray>& vertexArray){
+            inline static void DrawIndex(const Shared<VertexArray>& vertexArray){
                 s_RendererAPI->DrawIndex(vertexArray);
             }
 

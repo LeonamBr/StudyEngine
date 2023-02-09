@@ -12,6 +12,7 @@
 				"-DSTUDY_ENABLE_ASSERTS",
 				"-std=c++20",
 				"-I${workspaceFolder}\\include",
+				"-I${workspaceFolder}\\..\\StudyEngine\\include",
 				"-IC:\\Users\\leona\\OneDrive\\Área de Trabalho\\Game_engine_vscode\\StudyEngine\\src",
 				"-IC:\\Users\\leona\\OneDrive\\Área de Trabalho\\Game_engine_vscode\\StudyEngine\\include",
 				"${workspaceFolder}\\*.cpp",

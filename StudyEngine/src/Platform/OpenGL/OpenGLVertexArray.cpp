@@ -55,7 +55,7 @@ namespace Study {
         glBindVertexArray(0);
     }
 
-    void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuffer) {
+    void OpenGLVertexArray::AddVertexBuffer(const Shared<VertexBuffer> &vertexBuffer) {
 
         STUDY_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has not a layout");
 
@@ -80,7 +80,7 @@ namespace Study {
 
     }
 
-    void OpenGLVertexArray::AddIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) {
+    void OpenGLVertexArray::AddIndexBuffer(const Shared<IndexBuffer> &indexBuffer) {
 
             glBindVertexArray(m_RendererID);
             indexBuffer->Bind();

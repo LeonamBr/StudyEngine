@@ -3,6 +3,6 @@
 Executable:
 	echo "Criando Engine..."
 
-	g++ -W "-DSTUDY_WINDOWS" "-DSTUDY_DLL_BUILD" "-DSTUDY_ENABLE_ASSERTS" -std=c++20 "-Iinclude" "-I..\\StudyEngine\\include" *.cpp -g -o studyEngine.exe "-Llib" -lstudy
+	g++ -W "-DSTUDY_WINDOWS" "-DSTUDY_DLL_BUILD" "-DSTUDY_ENABLE_ASSERTS" -std=c++20 "-Iinclude" "-I..\\StudyEngine\\include" "*.cpp" -g -o studyEngine.exe "-Llib" -lstudy
 
 	echo "Build completa!!"
