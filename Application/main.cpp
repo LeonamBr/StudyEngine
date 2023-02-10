@@ -38,50 +38,9 @@ class LayerTest : public Study::Layer{
         m_IBuffer.reset(Study::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
         m_VArray->AddIndexBuffer(m_IBuffer);
 
-        
-        std::string vertexSrc = R"(
-            #version 330 core
+        m_Shader.reset(Study::Shader::Create("../Assets/Shaders/texShader.glsl"));
 
-            layout(location = 0) in vec3 a_Position;
-            layout(location = 1) in vec2 a_Texture;
-
-            uniform mat4 u_ViewProjection;
-            uniform mat4 u_Transform;
-
-            out vec2 v_Texture;
-
-            void main(){
-                
-                v_Texture = a_Texture;
-
-                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-
-            }
-
-        )";
-
-        std::string fragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec2 v_Texture;
-            
-            uniform sampler2D u_Texture;
-
-            void main(){
-                
-                color = texture(u_Texture, v_Texture);
-    
-
-            }
-
-        )";
-
-
-        m_Shader.reset(Study::Shader::Create(vertexSrc, fragmentSrc));
-
-        m_Texture = Study::Texture2D::Create("../testImage.png");
+        m_Texture = Study::Texture2D::Create("../Assets/2DTextures/testImage.png");
 
         std::dynamic_pointer_cast<Study::OpenGLShader>(m_Shader)->Bind();
         std::dynamic_pointer_cast<Study::OpenGLShader>(m_Shader)->UploadUniformInt("u_Texture", 0);

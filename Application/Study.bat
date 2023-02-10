@@ -1,7 +1,7 @@
 cls
-cd "../StudyEngine/"
-mingw32-make
+cd "../StudyEngine/build"
+make -j10
 cd "../Application/"
-mingw32-make
+make -j10
 .\studyEngine.exe
 cls
