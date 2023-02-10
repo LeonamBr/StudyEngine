@@ -20,7 +20,7 @@
  #flags
  OBJECTFLAGS = -c -g -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20
  CPPOBJECTS = $(patsubst %.cpp, %.o, ${CPPFILES}) 
- COBJECT = $(patsubst %.c, %.o, ${CPPFILES})
+ COBJECT = ../include/GLAD/glad.o
  EXTRAFLAGS = -Ofast
 
  #includes
@@ -28,27 +28,19 @@
 
  #linking
  LINKDIR = "-L../lib"
- DLLFLAGS = -shared -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -o study.dll
+ DLLFLAGS = -fPIC -shared -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -o
  LINKFLAGS = -lglew32 -lglfw3 -lgdi32 -lopengl32
- DLLDIR = study.dll
-
- #out folder
- OUTPUT = ./
+ DLLDIR = ../../Application/study.dll
 
  all : ${DLLDIR}
-	echo "Destruindo dlls..."
+	cls
 
-	del "..\..\Application\*.dll"
-
-	copy "study.dll" "..\..\Application\"
-
- %.dll: ${CPPOBJECTS}
-	echo "Criando dll..."
-	${CC} ${DLLFLAGS} $^ -Wl,--out-implib,study.a ${LINKLDIR} ${LINKFLAGS} 
+ ${DLLDIR}: ${CPPOBJECTS}
+	${CC} ${DLLFLAGS} $@ $^ -Wl,--out-implib,../../Application/lib/study.dll.a ${LINKLDIR} ${LINKFLAGS} 
 
  %.o:%.cpp
 	${CC} ${OBJECTFLAGS} ${EXTRAFLAGS} ${INCFILES} -o $@ $<
 	${CC} ${OBJECTFLAGS} ${EXTRAFLAGS} ${INCFILES} -o ../include/GLAD/glad.o ../include/GLAD/glad.c
 
  clean:
-	del ${BINARY} ${CPPOBJECT} 
+	del /s ..\..\*.o
