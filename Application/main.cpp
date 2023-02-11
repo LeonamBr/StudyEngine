@@ -38,12 +38,14 @@ class LayerTest : public Study::Layer{
         m_IBuffer.reset(Study::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
         m_VArray->AddIndexBuffer(m_IBuffer);
 
-        m_Shader.reset(Study::Shader::Create("../Assets/Shaders/texShader.glsl"));
+        //m_Shader = Study::Shader::Create("../Assets/Shaders/texShader.glsl");
+
+        auto textureShader = m_ShaderLibrary.Load("../Assets/Shaders/texShader.glsl");
 
         m_Texture = Study::Texture2D::Create("../Assets/2DTextures/testImage.png");
 
-        std::dynamic_pointer_cast<Study::OpenGLShader>(m_Shader)->Bind();
-        std::dynamic_pointer_cast<Study::OpenGLShader>(m_Shader)->UploadUniformInt("u_Texture", 0);
+        std::dynamic_pointer_cast<Study::OpenGLShader>(textureShader)->Bind();
+        std::dynamic_pointer_cast<Study::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 
         }
 
@@ -90,13 +92,11 @@ class LayerTest : public Study::Layer{
             
             Study::Renderer::BeginScene(m_Camera);
 
-            std::dynamic_pointer_cast<Study::OpenGLShader>(m_Shader)->Bind();
-            std::dynamic_pointer_cast<Study::OpenGLShader>(m_Shader)->UploadUniformVec3("u_Color", m_PinkColor);
             glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_TrianglePosition);
 
-            
+            auto textureShader = m_ShaderLibrary.Get("texShader");
             m_Texture->Bind();
-            Study::Renderer::Submit(m_Shader, m_VArray, transform);
+            Study::Renderer::Submit(textureShader, m_VArray, transform);
             Study::Renderer::EndScene();
             
         }
@@ -116,6 +116,7 @@ class LayerTest : public Study::Layer{
     
     private:
 
+        Study::ShaderLibrary m_ShaderLibrary;
         Study::Shared<Study::Shader> m_Shader;
         Study::Shared<Study::VertexBuffer> m_VBuffer;
         Study::Shared<Study::IndexBuffer> m_IBuffer;
@@ -132,7 +133,7 @@ class LayerTest : public Study::Layer{
 
         glm::vec3 m_TrianglePosition;
         float m_TriangleMoveSpeed = 0.5f;
-        glm::vec3 m_PinkColor = {0.8f, 0.0f, 0.8f};
+        //glm::vec3 m_PinkColor = {0.8f, 0.0f, 0.8f};
 
 };
 

@@ -27,6 +27,7 @@ namespace Study{
 
 }
 
+
 //core log Macros
 #define STUDY_CORE_TRACE(...)   ::Study::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define STUDY_CORE_INFO(...)    ::Study::Log::GetCoreLogger()->info(__VA_ARGS__)

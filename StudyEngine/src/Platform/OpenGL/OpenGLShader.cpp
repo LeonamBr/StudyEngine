@@ -24,11 +24,20 @@ namespace Study {
 
         std::string source = ReadFile(path);
         auto shaderSources = PreProcess(source);
+
         Compile(shaderSources);
+
+        auto lastSlash = path.find_last_of("/\\");
+        lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+        auto lastDot = path.find_last_of('.');
+        
+        auto count = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
+
+        m_Name = path.substr(lastSlash, count);
 
     }
 
-    OpenGLShader::OpenGLShader(const std::string& vertex, const std::string& fragment) {
+    OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertex, const std::string& fragment) : m_Name(name) {
     
         std::unordered_map<GLenum, std::string> sources;
         sources[GL_VERTEX_SHADER] = vertex;
@@ -104,7 +113,7 @@ namespace Study {
     {
 
         std::string shadertxt;
-        std::ifstream in(path, std::ios::in);
+        std::ifstream in(path, std::ios::in | std::ios::binary);
         if(in)
         {
             in.seekg(0, std::ios::end);
@@ -152,7 +161,11 @@ namespace Study {
     {
 
         GLuint program = glCreateProgram();
-        std::vector<GLenum> glShadersIDs(shaderSources.size());
+
+        STUDY_CORE_ASSERT(shaderSources.size() <= 2, "Only two shaders are suported at moment");
+
+        std::array<GLenum, 2> glShaderIDs;
+        int glShaderIDIndex = 0;
 
         for(auto& keyvalue : shaderSources){
             GLenum type = keyvalue.first;
@@ -183,7 +196,7 @@ namespace Study {
             }
         
             glAttachShader(program, shader);
-            glShadersIDs.push_back(shader);
+            glShaderIDs[glShaderIDIndex++] = shader;
 
         }
 
@@ -202,7 +215,7 @@ namespace Study {
             
             glDeleteProgram(program);
 
-            for(auto id: glShadersIDs )
+            for(auto id: glShaderIDs )
                glDeleteShader(id);
             
             STUDY_CORE_ERROR("{0}", infoLog.data());
@@ -211,7 +224,7 @@ namespace Study {
 
         }
 
-        for(auto id: glShadersIDs )
+        for(auto id: glShaderIDs )
           glDetachShader(program, id);
 
        m_RendererID = program;

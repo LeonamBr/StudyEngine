@@ -3,44 +3,44 @@
 
  #Directories wich contain cpp files
 
- SRC = ../src
- ENGINE = ../src/Engine
- CORE = ../src/Engine/Core
- EVENT = ../src/Engine/Event
- IMGUI = ../src/Engine/imGUI
- RENDERER = ../src/Engine/Renderer
- OPENGL = ../src/Platform/OpenGL
- WINDOWS = ../src/Platform/Windows
- GLAD = ../include/GLAD
- STB =../include/stb_image
- IMGUISRC = ../include/imGUI
+ SRC = ./src
+ ENGINE = ./src/Engine
+ CORE = ./src/Engine/Core
+ EVENT = ./src/Engine/Event
+ IMGUI = ./src/Engine/imGUI
+ RENDERER = ./src/Engine/Renderer
+ OPENGL = ./src/Platform/OpenGL
+ WINDOWS = ./src/Platform/Windows
+ GLAD = ./include/GLAD
+ STB = ./include/stb_image
+ IMGUISRC = ./include/imGUI
 
  CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${ENGINE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EVENT}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUI}, $(wildcard $(D)/*.cpp)) $(foreach D, ${RENDERER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${OPENGL}, $(wildcard $(D)/*.cpp)) $(foreach D, ${WINDOWS}, $(wildcard $(D)/*.cpp)) $(foreach D, ${GLAD}, $(wildcard $(D)/*.c)) $(foreach D, ${STB}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUISRC}, $(wildcard $(D)/*.cpp))
 
  #flags
  OBJECTFLAGS = -c -g -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20
  CPPOBJECTS = $(patsubst %.cpp, %.o, ${CPPFILES}) 
- COBJECT = ../include/GLAD/glad.o
+ COBJECT = ./include/GLAD/glad.o
  EXTRAFLAGS = -Ofast
 
  #includes
- INCFILES = "-I../include"
+ INCFILES = "-I./include"
 
  #linking
- LINKDIR = "-L../lib"
+ LINKDIR = "-L./lib"
  DLLFLAGS = -fPIC -shared -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -o
- LINKFLAGS = -lglew32 -lglfw3 -lgdi32 -lopengl32
- DLLDIR = ../../Application/study.dll
+ LINKFLAGS = -lglew32 -lglfw3 -lgdi32 -lopengl32 -lpthread
+ DLLDIR = ../Application/study.dll
 
  all : ${DLLDIR}
-	cls
 
  ${DLLDIR}: ${CPPOBJECTS}
-	${CC} ${DLLFLAGS} $@ $^ -Wl,--out-implib,../../Application/lib/study.dll.a ${LINKLDIR} ${LINKFLAGS} 
+	${CC} ${DLLFLAGS} $@ $^ -Wl,--out-implib,../Application/lib/study.dll.a ${LINKLDIR} ${LINKFLAGS} 
 
  %.o:%.cpp
 	${CC} ${OBJECTFLAGS} ${EXTRAFLAGS} ${INCFILES} -o $@ $<
-	${CC} ${OBJECTFLAGS} ${EXTRAFLAGS} ${INCFILES} -o ../include/GLAD/glad.o ../include/GLAD/glad.c
+	${CC} ${OBJECTFLAGS} ${EXTRAFLAGS} ${INCFILES} -o ./include/GLAD/glad.o ./include/GLAD/glad.c
+
 
  clean:
-	del /s ..\..\*.o
+	del /s .\*.o
