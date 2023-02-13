@@ -1,7 +1,7 @@
 #include "../../Headers.h"
 
 #include "WinInput.h"
-#include "../../Engine/Application.h"
+#include "../../Engine/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Study {

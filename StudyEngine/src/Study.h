@@ -3,16 +3,16 @@
 
 // ----------Application----------------------
 
-#include "Engine/Application.h"
-#include "Engine/Layer.h"
-#include "Engine/Log.h"
+#include "Engine/Core/Application.h"
+#include "Engine/Core/Layer.h"
+#include "Engine/Core/Log.h"
 
 #include "Engine/Core/Timer.h"
 
-#include "Engine/Input.h"
-#include "Engine/KeyCodes.h"
-#include "Engine/MouseButtonCodes.h"
-#include "Engine/OrthographicCameraController.h"
+#include "Engine/Core/Input.h"
+#include "Engine/Core/KeyCodes.h"
+#include "Engine/Core/MouseButtonCodes.h"
+#include "Engine/Controller/OrthographicCameraController.h"
 
 #include "Engine/imGui/ImGuiLayer.h"
 
@@ -27,6 +27,6 @@
 
 // ----------entry point --------------------
 
-#include "Engine/EntryPoint.h"
+#include "Engine/Core/EntryPoint.h"
 
 #endif

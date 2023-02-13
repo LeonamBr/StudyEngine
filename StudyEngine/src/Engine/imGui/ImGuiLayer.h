@@ -1,9 +1,9 @@
 #ifndef IMGUILAYER_H
 #define IMGUILAYER_H
 
-#include "../Core.h"
+#include "../Core/Core.h"
 
-#include "../Layer.h"
+#include "../Core/Layer.h"
 
 #include "../Event/ApplicationEvent.h"
 #include "../Event/KeyEvent.h"

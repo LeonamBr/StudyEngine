@@ -1,11 +1,11 @@
-#include "../Headers.h"
+#include "../../Headers.h"
 
 #include "Application.h"
 #include "Log.h"
 
 #include <GLAD/glad/glad.h>
 
-#include "Renderer/Renderer.h"
+#include "../Renderer/Renderer.h"
 
 #include "Input.h"
 
@@ -53,7 +53,8 @@ namespace Study{
 
         EventDispatcher dispatcher(e);
 
-        dispatcher.Dispatch<WindowCloseEvent>(STUDY_BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(STUDY_BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(STUDY_BIND_EVENT_FN(OnWindowResize));
 
 
         for(auto it = m_LayerStack.end(); it!= m_LayerStack.begin(); ){
@@ -76,14 +77,17 @@ namespace Study{
             Timer timestep = time - m_LastTime;
             m_LastTime = time;
 
-            for (Layer* layer : m_LayerStack)
-                layer->OnUpdate(timestep);
+            if(!m_Minimized)
+            {
+                for (Layer* layer : m_LayerStack)
+                    layer->OnUpdate(timestep);
 
-            m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
+            }
 
+                m_ImGuiLayer->Begin();
+                for (Layer* layer : m_LayerStack)
+                    layer->OnImGuiRender();
+                m_ImGuiLayer->End();
 
             m_Window->OnUpdate();
         }
@@ -97,4 +101,17 @@ namespace Study{
         
     }
 
+    bool Application::OnWindowResize(WindowResizeEvent &e)
+    {
+
+        if(e.GetWidth() == 0 || e.GetHeight() == 0){
+            m_Minimized = true;
+            return false;
+        }
+
+        m_Minimized = false;
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+        return false;
+    }
 }

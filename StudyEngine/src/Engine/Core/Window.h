@@ -1,10 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "../Headers.h"
+#include "../../Headers.h"
 
 #include "Core.h"
-#include "Event/Event.h"
+#include "../Event/Event.h"
 
 namespace Study {
 

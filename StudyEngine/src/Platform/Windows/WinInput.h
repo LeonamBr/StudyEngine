@@ -1,7 +1,7 @@
 #ifndef WININPUT_H
 #define WININPUT_H
 
-#include "../../Engine/Input.h"
+#include "../../Engine/Core/Input.h"
 namespace Study{
 
     class WinInput : public Input{

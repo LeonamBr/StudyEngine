@@ -2,8 +2,8 @@
 #define LAYER_H
 
 #include "Core.h"
-#include "Core/Timer.h"
-#include "Event/Event.h"
+#include "Timer.h"
+#include "../Event/Event.h"
 
 namespace Study {
 

@@ -16,10 +16,10 @@ class LayerTest : public Study::Layer{
             m_ImGui.reset(Study::ImGUIRenderer::Get());
 
         float vertices[4*5] = {
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+            -0.1f, -0.1f, 0.0f, 0.0f, 0.0f,
+             0.1f, -0.1f, 0.0f, 1.0f, 0.0f,
+             0.1f,  0.1f, 0.0f, 1.0f, 1.0f,
+            -0.1f,  0.1f, 0.0f, 0.0f, 1.0f,
         };
 
         m_VBuffer.reset(Study::VertexBuffer::Create(vertices, sizeof(vertices)));
@@ -52,6 +52,15 @@ class LayerTest : public Study::Layer{
         void OnUpdate(Study::Timer timestep) override{
 
             m_CameraController.OnUpdate(timestep);
+
+             if(Study::Input::IsKeyPressed(STUDY_KEY_J))
+                m_TrianglePosition.x -= m_TriangleMoveSpeed*timestep;
+            else if(Study::Input::IsKeyPressed(STUDY_KEY_L))
+                m_TrianglePosition.x += m_TriangleMoveSpeed*timestep;
+            if(Study::Input::IsKeyPressed(STUDY_KEY_I))
+                m_TrianglePosition.y += m_TriangleMoveSpeed*timestep;
+            else if(Study::Input::IsKeyPressed(STUDY_KEY_K))
+                m_TrianglePosition.y -= m_TriangleMoveSpeed*timestep;
 
             Study::RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 			Study::RendererCommand::Clear();

@@ -4,16 +4,16 @@
 #include "Core.h"
 
 #include "LayerStack.h"
-#include "Event/Event.h"
-#include "Event/ApplicationEvent.h"
+#include "../Event/Event.h"
+#include "../Event/ApplicationEvent.h"
 
-#include "imGui/ImGuiLayer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Buffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/OrthographicCamera.h"
+#include "../imGui/ImGuiLayer.h"
+#include "../Renderer/Shader.h"
+#include "../Renderer/Buffer.h"
+#include "../Renderer/VertexArray.h"
+#include "../Renderer/OrthographicCamera.h"
 
-#include "Core/Timer.h"
+#include "Timer.h"
 
 #include "Window.h"
 
@@ -38,12 +38,14 @@ namespace Study{
         private:
 
             bool OnWindowClose(WindowCloseEvent& e);
+            bool OnWindowResize(WindowResizeEvent& e);
         
         private:
 
             std::unique_ptr<Window> m_Window;
             ImGuiLayer* m_ImGuiLayer;
             bool m_Running = true;
+            bool m_Minimized = false;
             LayerStack m_LayerStack;
             float m_LastTime;
 

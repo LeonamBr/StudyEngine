@@ -2,7 +2,7 @@
 #define TEXTURE_H
 
 #include <string>
-#include "../Core.h"
+#include "../Core/Core.h"
 
 namespace Study {
 

@@ -5,6 +5,7 @@
 
  SRC = ./src
  ENGINE = ./src/Engine
+ CONTROLLER = ./src/Engine/Controller
  CORE = ./src/Engine/Core
  EVENT = ./src/Engine/Event
  IMGUI = ./src/Engine/imGUI
@@ -15,7 +16,7 @@
  STB = ./include/stb_image
  IMGUISRC = ./include/imGUI
 
- CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${ENGINE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EVENT}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUI}, $(wildcard $(D)/*.cpp)) $(foreach D, ${RENDERER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${OPENGL}, $(wildcard $(D)/*.cpp)) $(foreach D, ${WINDOWS}, $(wildcard $(D)/*.cpp)) $(foreach D, ${GLAD}, $(wildcard $(D)/*.c)) $(foreach D, ${STB}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUISRC}, $(wildcard $(D)/*.cpp))
+ CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${ENGINE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EVENT}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUI}, $(wildcard $(D)/*.cpp)) $(foreach D, ${RENDERER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${OPENGL}, $(wildcard $(D)/*.cpp)) $(foreach D, ${WINDOWS}, $(wildcard $(D)/*.cpp)) $(foreach D, ${GLAD}, $(wildcard $(D)/*.c)) $(foreach D, ${STB}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUISRC}, $(wildcard $(D)/*.cpp) $(foreach D, ${CONTROLLER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${CORE}, $(wildcard $(D)/*.cpp)))
 
  #flags
  OBJECTFLAGS = -c -g -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20

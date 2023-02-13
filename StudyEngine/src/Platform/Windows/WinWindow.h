@@ -1,7 +1,7 @@
 #ifndef WINWINDOW_H
 #define WINWINDOW_H
 
-#include "../../Engine/Window.h"
+#include "../../Engine/Core/Window.h"
 #include "../../Engine/Renderer/GraphicsContext.h"
 
 
