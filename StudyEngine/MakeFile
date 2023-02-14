@@ -19,7 +19,7 @@
  CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${ENGINE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EVENT}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUI}, $(wildcard $(D)/*.cpp)) $(foreach D, ${RENDERER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${OPENGL}, $(wildcard $(D)/*.cpp)) $(foreach D, ${WINDOWS}, $(wildcard $(D)/*.cpp)) $(foreach D, ${GLAD}, $(wildcard $(D)/*.c)) $(foreach D, ${STB}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUISRC}, $(wildcard $(D)/*.cpp) $(foreach D, ${CONTROLLER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${CORE}, $(wildcard $(D)/*.cpp)))
 
  #flags
- OBJECTFLAGS = -c -g -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20
+ OBJECTFLAGS = -c -g -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20
  CPPOBJECTS = $(patsubst %.cpp, %.o, ${CPPFILES}) 
  COBJECT = ./include/GLAD/glad.o
  EXTRAFLAGS = -Ofast

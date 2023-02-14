@@ -31,6 +31,10 @@ namespace Study {
     {
         ImGui::ColorEdit3(name.c_str(), value);
     }
+    void ImGUIRenderer::ColorEdit4(const std::string &name, float *value)
+    {
+        ImGui::ColorEdit4(name.c_str() , value);
+    }
     void ImGUIRenderer::End()
     {
         ImGui::End();

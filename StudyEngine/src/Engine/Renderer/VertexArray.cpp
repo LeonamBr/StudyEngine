@@ -6,13 +6,13 @@
 
 namespace Study {
 
-    VertexArray* VertexArray::Create()
+    Shared<VertexArray> VertexArray::Create()
     {
 
         switch(Renderer::GetAPI()){
 
             case RendererAPI::API::None: STUDY_CORE_ASSERT(false, "RendererAPI is not suported!"); return nullptr;
-            case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
+            case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
 
         }
 

@@ -16,6 +16,7 @@ namespace Study {
 
             void Begin(const char* name);
             void ColorEdit3(const std::string& name, float* value);
+            void ColorEdit4(const std::string& name, float* value);
             void End();
             static void Init();
             static ImGUIRenderer* Get();

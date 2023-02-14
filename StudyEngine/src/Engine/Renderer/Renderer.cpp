@@ -3,6 +3,7 @@
 #include "Renderer.h"
 
 #include "../../Platform/OpenGL/OpenGLShader.h"
+#include "Renderer2D.h"
 
 namespace Study {
 
@@ -12,6 +13,7 @@ namespace Study {
     {
 
         RendererCommand::Init();
+        Renderer2D::Init();
 
     }
 

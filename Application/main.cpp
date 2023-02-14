@@ -1,5 +1,7 @@
 #include "../StudyEngine/src/Study.h"
 
+#include "SandBox2D.h"
+
 #include "../StudyEngine/src/Platform/OpenGL/OpenGLShader.h"
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,7 +13,7 @@ class LayerTest : public Study::Layer{
     public:
         LayerTest() : Layer("Test!"), m_CameraController(1280.0f / 720.0f), m_TrianglePosition(0.0f) {
 
-            m_VArray.reset(Study::VertexArray::Create());
+            m_VArray = Study::VertexArray::Create();
             Study::ImGUIRenderer::Init();
             m_ImGui.reset(Study::ImGUIRenderer::Get());
 
@@ -113,7 +115,8 @@ class TestAPI : public Study::Application{
     public:
         TestAPI(){
 
-            PushLayer(new LayerTest());
+            //PushLayer(new LayerTest());
+            PushLayer(new SandBox2D());
 
         }
         ~TestAPI(){}

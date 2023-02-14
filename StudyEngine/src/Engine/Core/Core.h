@@ -3,6 +3,14 @@
 
 #include <memory>
 
+#ifdef _WIN32
+    #ifdef _WIN64
+        #define STUDY_WINDOWS
+    #else
+        #error "x86 Builders is not suported"
+    #endif
+#endif
+
 #ifdef STUDY_WINDOWS
     #ifdef STUDY_DLL_BUILD
         #define STUDY_API __declspec(dllexport)
