@@ -27,8 +27,10 @@ A game engine with learning pourpose
 ✅: Transform  
 ✅: Shader abstraction  
 ✅: texture  
-✅: Blending
-✅: camera controller
+✅: Blending  
+✅: camera controller  
+
+
 ...  
 
 planing new stuff  
