@@ -32,7 +32,7 @@ A game engine with learning pourpose
 🕛: Batch Render  
 🕛: Batch renderer textures  
 🕛: Rotation  
-🕛: Sprite sheets
+🕛: Sprite sheets  
 🕛: Tiles
 
 ...  
