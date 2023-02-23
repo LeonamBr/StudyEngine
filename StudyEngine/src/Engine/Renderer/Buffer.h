@@ -39,11 +39,11 @@ namespace Study {
 
         std::string Name;
         ShaderDataType Type;
-        uint32_t Offset;
+        size_t Offset;
         uint32_t Size;
         bool Normalized;
 
-        BufferElement() { }
+        BufferElement() = default;
 
         BufferElement(ShaderDataType type, const std::string& name, bool normalized = false) :
         Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized){
@@ -55,16 +55,16 @@ namespace Study {
             switch(Type){
 
             case ShaderDataType::Float: return 1;
-            case ShaderDataType::Vec2: return  2;
-            case ShaderDataType::Vec3: return  3;
-            case ShaderDataType::Vec4: return  4;
-            case ShaderDataType::Mat3: return  3 * 3;
-            case ShaderDataType::Mat4: return  4 * 4;
-            case ShaderDataType::Int:  return 1;
-            case ShaderDataType::Int2: return 2;
-            case ShaderDataType::Int3: return 3;
-            case ShaderDataType::Int4: return 4;
-            case ShaderDataType::Bool: return 1;
+            case ShaderDataType::Vec2:  return 2;
+            case ShaderDataType::Vec3:  return 3;
+            case ShaderDataType::Vec4:  return 4;
+            case ShaderDataType::Mat3:  return 3 * 3;
+            case ShaderDataType::Mat4:  return 4 * 4;
+            case ShaderDataType::Int:   return 1;
+            case ShaderDataType::Int2:  return 2;
+            case ShaderDataType::Int3:  return 3;
+            case ShaderDataType::Int4:  return 4;
+            case ShaderDataType::Bool:  return 1;
 
         }
 
@@ -99,7 +99,7 @@ namespace Study {
 
             void CalculateOffsetAndStride() {
                 
-                uint32_t offset = 0;
+                size_t offset = 0;
                 m_Stride = 0;
 
                 for (auto& element: m_Elements){
@@ -124,7 +124,7 @@ namespace Study {
 
         public:
 
-           virtual ~VertexBuffer() { }
+           virtual ~VertexBuffer() = default;
 
            virtual void Bind() const = 0;
            virtual void Unbind() const = 0;
@@ -140,7 +140,7 @@ namespace Study {
 
         public:
 
-            virtual ~IndexBuffer() { }
+            virtual ~IndexBuffer() = default;
 
             virtual void Bind() const = 0;
             virtual void Unbind() const = 0;

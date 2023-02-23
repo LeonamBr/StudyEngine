@@ -15,8 +15,9 @@
  GLAD = ./include/GLAD
  STB = ./include/stb_image
  IMGUISRC = ./include/imGUI
+ DEBUG = ./src/Engine/Debug
 
- CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${ENGINE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EVENT}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUI}, $(wildcard $(D)/*.cpp)) $(foreach D, ${RENDERER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${OPENGL}, $(wildcard $(D)/*.cpp)) $(foreach D, ${WINDOWS}, $(wildcard $(D)/*.cpp)) $(foreach D, ${GLAD}, $(wildcard $(D)/*.c)) $(foreach D, ${STB}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUISRC}, $(wildcard $(D)/*.cpp) $(foreach D, ${CONTROLLER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${CORE}, $(wildcard $(D)/*.cpp)))
+ CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${ENGINE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EVENT}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUI}, $(wildcard $(D)/*.cpp)) $(foreach D, ${RENDERER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${OPENGL}, $(wildcard $(D)/*.cpp)) $(foreach D, ${WINDOWS}, $(wildcard $(D)/*.cpp)) $(foreach D, ${GLAD}, $(wildcard $(D)/*.c)) $(foreach D, ${STB}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUISRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${CONTROLLER}, $(wildcard $(D)/*.cpp)) $(foreach D, ${CORE}, $(wildcard $(D)/*.cpp)) $(foreach D, ${DEBUG}, $(wildcard $(D)/*.cpp))
 
  #flags
  OBJECTFLAGS = -c -g -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -std=c++20
@@ -30,7 +31,7 @@
  #linking
  LINKDIR = "-L./lib"
  DLLFLAGS = -fPIC -shared -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -o
- LINKFLAGS = -lglew32 -lglfw3 -lgdi32 -lopengl32 -lpthread
+ LINKFLAGS = -lglew32 -lglfw3 -lgdi32 -lopengl32 
  DLLDIR = ../Application/study.dll
 
  all : ${DLLDIR}

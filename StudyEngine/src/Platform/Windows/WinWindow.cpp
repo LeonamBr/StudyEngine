@@ -11,7 +11,7 @@
 
 namespace Study{
 
-    static bool s_GLFWInitialized = false;
+    static uint8_t s_GLFWCount = 0;
 
     static void GLFWErrorCallback(int error, const char* description){
 
@@ -20,23 +20,31 @@ namespace Study{
     }
 
 
-    Window* Window::Create(const WindowProps& props){
+    Unique<Window> Window::Create(const WindowProps& props){
+        
 
-        return new WinWindow(props);
+        return CreateUnique<WinWindow>(props);
 
     }
 
     WinWindow::WinWindow(const WindowProps& props){
 
+        STUDY_PROFILE_FUNCTION();
         Init(props);
 
     }
 
     WinWindow::~WinWindow(){
 
+        STUDY_PROFILE_FUNCTION();
+
+        Shutdown();
+
     }
 
     void WinWindow::Init(const WindowProps& props){
+
+        STUDY_PROFILE_FUNCTION();
 
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
@@ -45,20 +53,24 @@ namespace Study{
 
         STUDY_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-        if(!s_GLFWInitialized){
+        if(s_GLFWCount == 0){
+
+            STUDY_PROFILE_SCOPE("glfwInit");
 
             int success = glfwInit();
             STUDY_CORE_ASSERT(success, "Could not initialize GLFW!!");
 
             glfwSetErrorCallback(GLFWErrorCallback);
-            s_GLFWInitialized = true;
 
         }
 
-        m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        {
+            STUDY_PROFILE_SCOPE("glfwCreateWindow");
+            m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+            ++s_GLFWCount;
+        }
         
-        
-        m_Context = new GLContext(m_Window);
+        m_Context = CreateUnique<GLContext>(m_Window);
         m_Context->Init() ;
         
         glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -168,11 +180,22 @@ namespace Study{
 
     void WinWindow::Shutdown()
 	{
+        STUDY_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Window);
+        --s_GLFWCount;
+
+        if(s_GLFWCount == 0)
+        {
+            glfwTerminate();
+        }
 	}
 
 	void WinWindow::OnUpdate()
 	{
+
+        STUDY_PROFILE_FUNCTION();
+
 		glfwPollEvents();
         m_Context->SwapBuffers();
 
@@ -180,6 +203,9 @@ namespace Study{
 
 	void WinWindow::SetVSync(bool enabled)
 	{
+
+        STUDY_PROFILE_FUNCTION();
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else

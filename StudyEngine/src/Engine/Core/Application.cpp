@@ -18,6 +18,8 @@ namespace Study{
 
     Application::Application(){
 
+        STUDY_PROFILE_FUNCTION();
+
         STUDY_CORE_ASSERT(!s_Instance, "Application already exists!");
         s_Instance = this;
 
@@ -31,11 +33,18 @@ namespace Study{
 
     }
 
-    Application::~Application(){
+    Application::~Application()
+    {
+
+        STUDY_PROFILE_FUNCTION();
+
+        Renderer::Shutdown();
 
     }
 
     void Application::PushLayer(Layer* layer){
+
+        STUDY_PROFILE_FUNCTION();
 
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
@@ -44,12 +53,16 @@ namespace Study{
 
     void Application::PushOverlay(Layer* overlay){
 
+        STUDY_PROFILE_FUNCTION();
+
         m_LayerStack.PushOverlay(overlay);
         overlay->OnAttach();
 
     }
 
     void Application::OnEvent(Event& e){
+
+        STUDY_PROFILE_FUNCTION();
 
         EventDispatcher dispatcher(e);
 
@@ -70,8 +83,12 @@ namespace Study{
 
     void Application::run(){
 
+        STUDY_PROFILE_FUNCTION();
+
         while(m_Running)
         {
+
+            STUDY_PROFILE_SCOPE("GameLoop");
 
             float time = (float)glfwGetTime();
             Timer timestep = time - m_LastTime;
@@ -79,15 +96,27 @@ namespace Study{
 
             if(!m_Minimized)
             {
-                for (Layer* layer : m_LayerStack)
-                    layer->OnUpdate(timestep);
+                {
 
+                    STUDY_PROFILE_SCOPE("LAyerStack OnUpdate");
+
+                    for (Layer* layer : m_LayerStack)
+                        layer->OnUpdate(timestep);
+
+                }
+                m_ImGuiLayer->Begin();
+
+                {
+
+                    STUDY_PROFILE_SCOPE("LAyerStack ImGuiRender");
+
+                    for (Layer* layer : m_LayerStack)
+                        layer->OnImGuiRender();
+
+                }
+                    m_ImGuiLayer->End();
             }
 
-                m_ImGuiLayer->Begin();
-                for (Layer* layer : m_LayerStack)
-                    layer->OnImGuiRender();
-                m_ImGuiLayer->End();
 
             m_Window->OnUpdate();
         }
@@ -96,6 +125,7 @@ namespace Study{
 
     bool Application::OnWindowClose(WindowCloseEvent& e){
 
+
         m_Running = false;
         return true;
         
@@ -103,6 +133,7 @@ namespace Study{
 
     bool Application::OnWindowResize(WindowResizeEvent &e)
     {
+        STUDY_PROFILE_FUNCTION();
 
         if(e.GetWidth() == 0 || e.GetHeight() == 0){
             m_Minimized = true;

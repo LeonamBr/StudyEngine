@@ -9,7 +9,7 @@ typedef unsigned int GLenum;
 
 namespace Study{
 
-    class STUDY_API OpenGLShader : public Shader {
+    class OpenGLShader : public Shader {
         
         public:
 
@@ -19,6 +19,14 @@ namespace Study{
 
             virtual void Bind() const override;
             virtual void Unbind() const override;
+
+            virtual void SetInt(const std::string &name, int Int) override;
+            virtual void SetFloat(const std::string& name, float Float) override;
+
+            virtual void SetVec2(const std::string &name, const glm::vec2& vec) override;
+            virtual void SetVec3(const std::string &name, const glm::vec3& vec) override;
+            virtual void SetVec4(const std::string &name, const glm::vec4& vec) override;
+            virtual void SetMat4(const std::string &name, const glm::mat4& mat) override;
 
             virtual const std::string& GetName() const override { return m_Name; }
 

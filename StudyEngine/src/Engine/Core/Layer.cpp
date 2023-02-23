@@ -7,9 +7,5 @@ namespace Study {
 
     }
 
-    Layer::~Layer(){
-        
-    }
-
 
 }

@@ -6,7 +6,7 @@
 
 namespace Study {
 
-    Input* Input::s_Instance = new WinInput();
+    Unique<Input> Input::s_Instance = CreateUnique<WinInput>();
 
     bool WinInput::IsKeyPressedImpl(int keycode)
     {

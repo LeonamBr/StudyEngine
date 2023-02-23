@@ -6,6 +6,6 @@
 
 namespace Study{
 
-    RendererAPI* RendererCommand::s_RendererAPI = new OpenGLRendererAPI;
+    Unique<RendererAPI> RendererCommand::s_RendererAPI =  CreateUnique<OpenGLRendererAPI>();
 
 }

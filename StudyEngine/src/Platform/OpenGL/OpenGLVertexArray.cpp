@@ -32,6 +32,8 @@ namespace Study {
 
     OpenGLVertexArray::OpenGLVertexArray() {
 
+        STUDY_PROFILE_FUNCTION();
+
         glCreateVertexArrays(1, &m_RendererID);
 
 
@@ -39,6 +41,7 @@ namespace Study {
 
     OpenGLVertexArray::~OpenGLVertexArray()
     {
+        STUDY_PROFILE_FUNCTION();
 
         glDeleteVertexArrays(1, &m_RendererID);
 
@@ -46,46 +49,54 @@ namespace Study {
 
     void OpenGLVertexArray::Bind() const {
 
+        STUDY_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererID);
 
     }
 
     void OpenGLVertexArray::Unbind() const {
+
+        STUDY_PROFILE_FUNCTION();
         
         glBindVertexArray(0);
     }
 
     void OpenGLVertexArray::AddVertexBuffer(const Shared<VertexBuffer> &vertexBuffer) {
 
+        STUDY_PROFILE_FUNCTION();
+
         STUDY_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has not a layout");
 
         glBindVertexArray(m_RendererID);
         vertexBuffer->Bind();
 
-        uint32_t index = 0;
         const auto& layout = vertexBuffer->GetLayout();
         for (const auto& element : layout){
 
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index,
+            glEnableVertexAttribArray(m_VertexBufferIndex);
+            glVertexAttribPointer(m_VertexBufferIndex,
                                   element.GetComponentCount(),
                                   ShaderDataTypeToOpenGLBaseType(element.Type),
                                   element.Normalized ? GL_TRUE : GL_FALSE,
                                   layout.GetStride(),
                                   (const void*)element.Offset);
-            index++;
+            m_VertexBufferIndex++;
         }
 
         m_VertexBuffers.push_back(vertexBuffer);
+        m_VertexBufferIndex += layout.GetElements().size();
 
     }
 
     void OpenGLVertexArray::AddIndexBuffer(const Shared<IndexBuffer> &indexBuffer) {
 
-            glBindVertexArray(m_RendererID);
-            indexBuffer->Bind();
+        STUDY_PROFILE_FUNCTION();
 
-            m_IndexBuffer = indexBuffer;
+        glBindVertexArray(m_RendererID);
+        indexBuffer->Bind();
+
+        m_IndexBuffer = indexBuffer;
 
     }
 }

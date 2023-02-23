@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 
+#include <glm/glm.hpp>
+
 namespace Study{
 
     class STUDY_API Shader {
@@ -13,6 +15,13 @@ namespace Study{
 
             virtual void Bind() const = 0;
             virtual void Unbind() const = 0;
+
+            virtual void SetInt(const std::string &name, int Int)  = 0;
+            virtual void SetFloat(const std::string &name, float Float)  = 0;
+            virtual void SetVec2(const std::string &name, const glm::vec2& vec)  = 0;
+            virtual void SetVec3(const std::string &name, const glm::vec3& vec)  = 0;
+            virtual void SetVec4(const std::string &name, const glm::vec4& vec)  = 0;
+            virtual void SetMat4(const std::string &name, const glm::mat4& mat)  = 0;
 
             virtual const std::string& GetName() const = 0;
 

@@ -22,6 +22,8 @@ namespace Study {
     OpenGLShader::OpenGLShader(const std::string& path)
     {
 
+        STUDY_PROFILE_FUNCTION();
+
         std::string source = ReadFile(path);
         auto shaderSources = PreProcess(source);
 
@@ -39,6 +41,8 @@ namespace Study {
 
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertex, const std::string& fragment) : m_Name(name) {
     
+        STUDY_PROFILE_FUNCTION();
+        
         std::unordered_map<GLenum, std::string> sources;
         sources[GL_VERTEX_SHADER] = vertex;
         sources[GL_FRAGMENT_SHADER] = fragment;
@@ -48,12 +52,14 @@ namespace Study {
 
     OpenGLShader::~OpenGLShader()
     {
+        STUDY_PROFILE_FUNCTION();
 
         glDeleteProgram(m_RendererID);
 
     }
     void OpenGLShader::Bind() const
     {
+        STUDY_PROFILE_FUNCTION();
 
         glUseProgram(m_RendererID);
 
@@ -61,8 +67,47 @@ namespace Study {
     void OpenGLShader::Unbind() const
     {
 
+        STUDY_PROFILE_FUNCTION();
+
         glUseProgram(0);
 
+    }
+
+    void OpenGLShader::SetInt(const std::string &name, int  Int)
+    {
+        STUDY_PROFILE_FUNCTION();
+
+        UploadUniformInt(name, Int);
+    }
+
+    void OpenGLShader::SetFloat(const std::string& name, float Float)
+    {
+        STUDY_PROFILE_FUNCTION();
+        UploadUniformfloat(name, Float);
+    }
+
+    void OpenGLShader::SetVec2(const std::string &name, const glm::vec2 &vec)
+    {
+        STUDY_PROFILE_FUNCTION();
+        UploadUniformVec2(name, vec);
+    }
+
+    void OpenGLShader::SetVec3(const std::string &name, const glm::vec3 &vec)
+    {
+        STUDY_PROFILE_FUNCTION();
+        UploadUniformVec3(name, vec);
+    }
+
+    void OpenGLShader::SetVec4(const std::string &name, const glm::vec4 &vec) 
+    {
+        STUDY_PROFILE_FUNCTION();
+        UploadUniformVec4(name, vec);
+    }
+
+    void OpenGLShader::SetMat4(const std::string &name, const glm::mat4 &mat) 
+    {
+        STUDY_PROFILE_FUNCTION();
+        UploadUniformMat4(name, mat);
     }
 
     void OpenGLShader::UploadUniformInt(const std::string &name, int value)
@@ -112,6 +157,8 @@ namespace Study {
     std::string OpenGLShader::ReadFile(const std::string &path)
     {
 
+        STUDY_PROFILE_FUNCTION();
+
         std::string shadertxt;
         std::ifstream in(path, std::ios::in | std::ios::binary);
         if(in)
@@ -132,6 +179,8 @@ namespace Study {
     std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
     {
 
+        STUDY_PROFILE_FUNCTION();
+
         std::unordered_map<GLenum, std::string> shaderSource;
 
         const char* token = "#type";
@@ -148,8 +197,9 @@ namespace Study {
             STUDY_CORE_ASSERT( ShaderTypeFromString(type), "Invalid shader type!");
 
             size_t nextLinePosition = source.find_first_not_of("\r\n", eol);
+            STUDY_CORE_ASSERT(nextLinePosition != std::string::npos, "Sintax error");
             position = source.find(token, nextLinePosition);
-            shaderSource[ShaderTypeFromString(type)] = source.substr(nextLinePosition, position - (nextLinePosition == std::string::npos ? source.size() -1: nextLinePosition));
+            shaderSource[ShaderTypeFromString(type)] = (position == std::string::npos) ? source.substr(nextLinePosition) : source.substr(nextLinePosition, position - nextLinePosition);
 
         }
 
@@ -159,6 +209,8 @@ namespace Study {
 
     void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
     {
+
+        STUDY_PROFILE_FUNCTION();
 
         GLuint program = glCreateProgram();
 
@@ -224,8 +276,10 @@ namespace Study {
 
         }
 
-        for(auto id: glShaderIDs )
-          glDetachShader(program, id);
+        for(auto id: glShaderIDs ) {
+            glDetachShader(program, id);
+            glDeleteShader(id);
+        }
 
        m_RendererID = program;
 

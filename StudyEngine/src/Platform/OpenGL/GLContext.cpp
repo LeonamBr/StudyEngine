@@ -15,6 +15,8 @@ namespace Study {
 
     void GLContext::Init(){
 
+        STUDY_PROFILE_FUNCTION();
+
         glfwMakeContextCurrent(m_Window);
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         STUDY_CORE_ASSERT(status, "Failed to initialize Glad!");
@@ -26,6 +28,8 @@ namespace Study {
     }
 
     void GLContext::SwapBuffers(){
+
+        STUDY_PROFILE_FUNCTION();
 
         glfwSwapBuffers(m_Window);
 

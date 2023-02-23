@@ -32,7 +32,7 @@ namespace Study{
 
         private:
             GLFWwindow* m_Window;
-            GraphicsContext* m_Context;
+            Unique<GraphicsContext> m_Context;
 
             struct WindowData{
                 

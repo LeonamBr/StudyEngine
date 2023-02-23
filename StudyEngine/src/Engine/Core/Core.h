@@ -11,14 +11,18 @@
     #endif
 #endif
 
-#ifdef STUDY_WINDOWS
-    #ifdef STUDY_DLL_BUILD
-        #define STUDY_API __declspec(dllexport)
+#ifdef DYNAMIC_LINK
+    #ifdef STUDY_WINDOWS
+        #ifdef STUDY_DLL_BUILD
+            #define STUDY_API __declspec(dllexport)
+        #else
+            #define STUDY_API __declspec(dllimport)
+        #endif
     #else
-        #define STUDY_API __declspec(dllimport)
+        #error Only Windows Suport
     #endif
 #else
-    #error Only Windows Suport
+    #define STUDY_API
 #endif
 
 #ifdef STUDY_ENABLE_ASSERTS
@@ -37,9 +41,19 @@ namespace Study {
 
     template<typename T>
     using Unique = std::unique_ptr<T>;
+    template<typename T, typename ... Args>
+    constexpr Unique<T> CreateUnique(Args&& ... args)
+    {
+        return std::make_unique<T>(std::forward<Args>(args) ...);
+    }
 
     template<typename T>
     using Shared = std::shared_ptr<T>;
+    template<typename T, typename ... Args>
+    constexpr Shared<T> CreateShared(Args&& ... args)
+    {
+        return std::make_shared<T>(std::forward<Args>(args) ...);
+    }
 
 }
 

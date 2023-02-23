@@ -33,7 +33,7 @@ namespace Study{
 
         private:
 
-            static RendererAPI* s_RendererAPI;
+            static Unique<RendererAPI> s_RendererAPI;
 
 
     };

@@ -24,6 +24,7 @@ namespace Study {
         private:
 
             uint32_t m_RendererID;
+            uint32_t m_VertexBufferIndex = 0;
             std::vector<Shared<VertexBuffer>> m_VertexBuffers;
             Shared<IndexBuffer> m_IndexBuffer;
 

@@ -28,9 +28,7 @@ namespace Study {
 
         using EventCallbackFn = std::function<void(Event&)>;
 
-        virtual ~Window(){
-
-        }
+        virtual ~Window() = default;
 
         virtual void OnUpdate() = 0;
 
@@ -43,7 +41,7 @@ namespace Study {
 
         virtual void* GetNativeWindow() const = 0;
 
-        static Window* Create(const WindowProps& props = WindowProps());
+        static Unique<Window> Create(const WindowProps& props = WindowProps());
         
     };
 
