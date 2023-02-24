@@ -27,8 +27,8 @@ namespace Study{
 
             }
 
-            inline static void DrawIndex(const Shared<VertexArray>& vertexArray){
-                s_RendererAPI->DrawIndex(vertexArray);
+            inline static void DrawIndex(const Shared<VertexArray>& vertexArray, uint32_t count = 0){
+                s_RendererAPI->DrawIndex(vertexArray, count);
             }
 
         private:

@@ -11,18 +11,14 @@
     #endif
 #endif
 
-#ifdef DYNAMIC_LINK
-    #ifdef STUDY_WINDOWS
-        #ifdef STUDY_DLL_BUILD
-            #define STUDY_API __declspec(dllexport)
-        #else
-            #define STUDY_API __declspec(dllimport)
-        #endif
+#ifdef STUDY_WINDOWS
+    #ifdef STUDY_DLL_BUILD
+        #define STUDY_API __declspec(dllexport)
     #else
-        #error Only Windows Suport
+        #define STUDY_API __declspec(dllimport)
     #endif
 #else
-    #define STUDY_API
+    #error Only Windows Suport
 #endif
 
 #ifdef STUDY_ENABLE_ASSERTS

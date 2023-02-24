@@ -7,7 +7,7 @@
 
 namespace Study {
 
-    VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size){
+    Shared<VertexBuffer> VertexBuffer::Create(uint32_t size){
 
         switch (Renderer::GetAPI()){
 
@@ -18,7 +18,7 @@ namespace Study {
             }
                 
             case RendererAPI::API::OpenGL:
-                return new OpenGLVertexBuffer(vertices, size);
+                return  CreateShared<OpenGLVertexBuffer>(size);
 
         }
 
@@ -28,7 +28,28 @@ namespace Study {
 
     }
 
-    IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size){
+    Shared<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size){
+
+        switch (Renderer::GetAPI()){
+
+            case RendererAPI::API::None: {
+
+                STUDY_CORE_ASSERT(false, "RendererAPI::None is Currently not suported.");
+                return nullptr;    
+            }
+                
+            case RendererAPI::API::OpenGL:
+                return  CreateShared<OpenGLVertexBuffer>(vertices, size);
+
+        }
+
+        STUDY_CORE_ASSERT(false, "Unknow Renderer API!");
+        return nullptr;
+
+
+    }
+
+    Shared<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t size){
 
          switch (Renderer::GetAPI()){
 
@@ -39,7 +60,7 @@ namespace Study {
             }
                 
             case RendererAPI::API::OpenGL:
-                return new OpenGLIndexBuffer(indices, size);
+                return CreateShared<OpenGLIndexBuffer>(indices, size);
 
         }
 

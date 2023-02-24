@@ -24,7 +24,7 @@ class LayerTest : public Study::Layer{
             -0.1f,  0.1f, 0.0f, 0.0f, 1.0f,
         };
 
-        m_VBuffer.reset(Study::VertexBuffer::Create(vertices, sizeof(vertices)));
+        m_VBuffer = Study::VertexBuffer::Create(vertices, sizeof(vertices));
 
        
         Study::BufferLayout layout = {
@@ -37,7 +37,7 @@ class LayerTest : public Study::Layer{
 
 
         uint32_t indices[6] = {0, 1, 2, 2, 3, 0};
-        m_IBuffer.reset(Study::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
+        m_IBuffer = Study::IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t));
         m_VArray->AddIndexBuffer(m_IBuffer);
 
         //m_Shader = Study::Shader::Create("../Assets/Shaders/texShader.glsl");

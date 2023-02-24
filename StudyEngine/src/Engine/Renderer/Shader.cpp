@@ -10,7 +10,7 @@ namespace Study {
         switch(Renderer::GetAPI()){
 
             case RendererAPI::API::None: STUDY_CORE_ASSERT(false, "RendererAPI is not suported!"); return nullptr;
-            case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(path);
+            case RendererAPI::API::OpenGL: return CreateShared<OpenGLShader>(path);
 
         }
 
@@ -25,7 +25,7 @@ namespace Study {
         switch(Renderer::GetAPI()){
 
             case RendererAPI::API::None: STUDY_CORE_ASSERT(false, "RendererAPI is not suported!"); return nullptr;
-            case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(name, vertex, fragment);
+            case RendererAPI::API::OpenGL: return CreateShared<OpenGLShader>(name, vertex, fragment);
 
         }
 
@@ -75,7 +75,5 @@ namespace Study {
     {
         return m_Shaders.find(name) != m_Shaders.end();
     }
-    
-    
 
 }
