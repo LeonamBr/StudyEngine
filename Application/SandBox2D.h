@@ -27,6 +27,7 @@ class SandBox2D : public Study::Layer {
         glm::vec4 m_SquareColor = {1.0f, 0.0f, 0.0f, 1.0f};
 
         static float s_FPS;
+        static float s_Time;
 
 };
 
