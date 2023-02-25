@@ -22,10 +22,11 @@ class SandBox2D : public Study::Layer {
 
         Study::Shared<Study::VertexArray> m_VertexArray;
         Study::Shared<Study::Shader> m_Shader;
-        Study::Shared<Study::ImGUIRenderer> m_ImGui;
         Study::Shared<Study::Texture2D> m_Texture, m_Background, m_Ghost, m_Jeff, m_Marcus, m_Nicholas;
 
         glm::vec4 m_SquareColor = {1.0f, 0.0f, 0.0f, 1.0f};
+
+        static float s_FPS;
 
 };
 
