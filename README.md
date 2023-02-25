@@ -29,9 +29,9 @@ A game engine with learning pourpose
 ✅: texture  
 ✅: Blending  
 ✅: camera controller  
-🕛: Batch Render  
-🕛: Batch renderer textures  
-🕛: Rotation  
+✅: Batch Render  
+✅: Batch renderer textures  
+✅: Rotation  
 🕛: Sprite sheets  
 🕛: Tiles
 

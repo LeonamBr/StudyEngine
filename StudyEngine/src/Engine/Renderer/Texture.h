@@ -19,6 +19,8 @@ namespace Study {
 
             virtual void Bind(uint32_t slot = 0) const = 0;
 
+            virtual bool operator==(const Texture& other) const = 0;
+
     };
 
     class STUDY_API Texture2D : public Texture {
@@ -27,6 +29,7 @@ namespace Study {
 
             static Shared<Texture2D> Create(uint32_t width, uint32_t height);
             static Shared<Texture2D> Create(const std::string& path);
+
 
     };
 

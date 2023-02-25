@@ -17,6 +17,7 @@ namespace Study{
             virtual void Unbind() const = 0;
 
             virtual void SetInt(const std::string &name, int Int)  = 0;
+            virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;
             virtual void SetFloat(const std::string &name, float Float)  = 0;
             virtual void SetVec2(const std::string &name, const glm::vec2& vec)  = 0;
             virtual void SetVec3(const std::string &name, const glm::vec3& vec)  = 0;

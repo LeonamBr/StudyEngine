@@ -21,6 +21,7 @@ namespace Study{
             virtual void Unbind() const override;
 
             virtual void SetInt(const std::string &name, int Int) override;
+            virtual void SetIntArray(const std::string& name, int* values, uint32_t count) override;
             virtual void SetFloat(const std::string& name, float Float) override;
 
             virtual void SetVec2(const std::string &name, const glm::vec2& vec) override;
@@ -31,6 +32,7 @@ namespace Study{
             virtual const std::string& GetName() const override { return m_Name; }
 
             void UploadUniformInt(const std::string& name, int value);
+            void UploadUniformIntArray(const std::string& name, int* values, uint32_t count);
 
             void UploadUniformfloat(const std::string& name, float value);
             void UploadUniformVec2(const std::string& name, const glm::vec2& value);
