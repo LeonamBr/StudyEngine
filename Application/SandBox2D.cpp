@@ -22,6 +22,11 @@ void SandBox2D::OnAttach()
     m_Jeff = Study::Texture2D::Create("../Assets/2DTextures/jeff.png");
     m_Marcus = Study::Texture2D::Create("../Assets/2DTextures/marcus.png");
     m_Nicholas = Study::Texture2D::Create("../Assets/2DTextures/nicholas.png");
+    m_Sheet = Study::Texture2D::Create("../Assets/2DTextures/Pac-Man_Comparable_Sprite_Sheet.png");
+
+    m_PacmanSheet = Study::SubTexture2D::CreateFromCoords(m_Sheet, {1.0f, 9.0f}, {16.0f, 16.0f});
+
+    m_CameraController.SetZoomLevel(5.0f);
 
 }
 
@@ -37,7 +42,7 @@ void SandBox2D::OnUpdate(Study::Timer timestep)
 
     STUDY_PROFILE_FUNCTION();
 
-    s_Time = timestep;
+    s_Time = timestep * 1000.0f;
     s_FPS = 1.0f/timestep;
 
     m_CameraController.OnUpdate(timestep);
@@ -58,6 +63,7 @@ void SandBox2D::OnUpdate(Study::Timer timestep)
     Study::Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {100.0f, 100.0f}, m_Background, 100.0f, glm::vec4({0.9f, 0.3f, 1.0f, 0.3f}));
     Study::Renderer2D::DrawRotatedQuad({0.0, -0.8f}, {0.1f, 0.1f}, tsrotation ,m_Texture);
     Study::Renderer2D::DrawRotatedQuad({0.0f, 0.0f}, {0.1f, 0.1f}, -tsrotation, m_Ghost);
+    Study::Renderer2D::DrawQuad({0.0f, -0.4f}, {1.0f, 1.0f}, m_PacmanSheet);
     
     Study::Renderer2D::EndScene();
 
@@ -71,7 +77,7 @@ void SandBox2D::OnImGuiRender()
 
     auto stats = Study::Renderer2D::GetStats();
 
-    ImGui::Text("Renderer2D Stats - (Frametime: %.2f ms | FPS: %.2f ) ", s_Time*1000.0f, s_FPS);
+    ImGui::Text("Renderer2D Stats - (Frametime: %.2f ms | FPS: %.2f ) ", s_Time, s_FPS);
     ImGui::Text("DrawCalls: %d", stats.DrawCalls);
     ImGui::Text("Quads: %d", stats.QuadCount);
     ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());

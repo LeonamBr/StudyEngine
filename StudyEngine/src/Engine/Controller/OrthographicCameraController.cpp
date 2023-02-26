@@ -69,6 +69,13 @@ namespace Study {
 
     }
 
+    void OrthographicCameraController::CalculateView()
+    {
+
+        m_Camera.SetProjection(-m_AspectRatio*m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+
+    }
+
     bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent &e)
     {
 
@@ -76,7 +83,8 @@ namespace Study {
 
         m_ZoomLevel -= e.GetYOffset() * 0.25f;
         m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-        m_Camera.SetProjection(-m_AspectRatio*m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+        CalculateView();
+        
         return false;
     }
 
@@ -86,7 +94,7 @@ namespace Study {
         STUDY_PROFILE_FUNCTION();
 
         m_ZoomLevel = (float)e.GetWidth() / (float)e.GetHeight();
-        m_Camera.SetProjection(-m_AspectRatio*m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+        CalculateView();
         return false;
     }
 }
