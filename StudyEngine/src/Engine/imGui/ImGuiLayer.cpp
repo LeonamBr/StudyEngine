@@ -1,7 +1,6 @@
 #include "../../Headers.h"
 
 #include "ImGuiLayer.h"
-#include <imGui/imgui.h>
 
 #include <imGui/imgui_impl_opengl3.h>
 #include <imGui/imgui_impl_glfw.h>
@@ -11,6 +10,7 @@
 #include "../Core/Application.h"
 
 namespace Study{
+
 
     ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer"){
 
@@ -47,6 +47,17 @@ namespace Study{
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
+
+	void ImGuiLayer::OnEvent(Event& e)
+	{
+		if (m_BlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			e.m_Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.m_Handled |= e.IsInCategory(EventCategoryKB) & io.WantCaptureKeyboard;
+		}
+	}
+	
 
     void ImGuiLayer::OnDetach(){
 

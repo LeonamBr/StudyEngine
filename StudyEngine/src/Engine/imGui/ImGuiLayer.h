@@ -4,6 +4,7 @@
 #include "../Core/Core.h"
 
 #include "../Core/Layer.h"
+#include <imGui/imgui.h>
 
 #include "../Event/ApplicationEvent.h"
 #include "../Event/KeyEvent.h"
@@ -19,12 +20,18 @@ namespace Study {
 
            virtual void OnAttach() override;
            virtual void OnDetach() override;
+           virtual void OnEvent(Event& e) override;
+
+           static ImGuiContext* GetContext() { return ImGui::GetCurrentContext(); }
 
            void Begin();
            void End();
 
+           void SetBlocklEvents(bool block) { m_BlockEvents = block; }
+
         private:
 
+            bool m_BlockEvents = true;
             float m_Time = 0.0f;
 
 

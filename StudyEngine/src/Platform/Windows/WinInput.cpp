@@ -1,14 +1,13 @@
 #include "../../Headers.h"
 
-#include "WinInput.h"
+#include "../../Engine/Core/Input.h"
 #include "../../Engine/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Study {
 
-    Unique<Input> Input::s_Instance = CreateUnique<WinInput>();
 
-    bool WinInput::IsKeyPressedImpl(int keycode)
+    bool Input::IsKeyPressed(int keycode)
     {
 
         auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
@@ -18,7 +17,7 @@ namespace Study {
         return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
-    bool WinInput::IsMouseButtonPressedImpl(int button)
+    bool Input::IsMouseButtonPressed(int button)
     {
 
         auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
@@ -27,7 +26,7 @@ namespace Study {
 
         return state == GLFW_PRESS;
     }
-    std::pair<float, float> WinInput::GetMousePositionImpl()
+    std::pair<float, float> Input::GetMousePosition()
     {
 
         auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
@@ -36,18 +35,18 @@ namespace Study {
 
         return { (float)xpos, (float)ypos };
     }
-    float WinInput::GetMouseXImpl()
+    float Input::GetMouseX()
     {
         
-        auto[x,y] = GetMousePositionImpl();
+        auto[x,y] = GetMousePosition();
 
         return x;
 
     }
-    float WinInput::GetMouseYImpl()
+    float Input::GetMouseY()
     {
 
-        auto[x,y] = GetMousePositionImpl();
+        auto[x,y] = GetMousePosition();
 
         return y;
 

@@ -69,6 +69,14 @@ namespace Study {
 
     }
 
+    void OrthographicCameraController::OnResize(float width, float height)
+    {
+
+        m_ZoomLevel = width / height;
+        CalculateView();
+
+    }
+
     void OrthographicCameraController::CalculateView()
     {
 
