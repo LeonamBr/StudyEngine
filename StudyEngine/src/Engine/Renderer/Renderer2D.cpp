@@ -119,7 +119,24 @@ namespace Study {
         STUDY_PROFILE_FUNCTION();
     }
 
-    void Renderer2D::BeginScene(const OrthographicCamera& camera)
+    void Renderer2D::BeginScene(const Camera &camera, const glm::mat4 &transform)
+    {
+
+        STUDY_PROFILE_FUNCTION();
+
+        glm::mat4 viewprojection = camera.GetProjection() * glm::inverse(transform);
+
+        s_Data.TextureShader->Bind();
+        s_Data.TextureShader->SetMat4("u_ViewProjection", viewprojection);
+
+        s_Data.QuadIndexCount = 0;
+        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+        s_Data.TextureSlotIndex = 1;
+
+    }
+
+    void Renderer2D::BeginScene(const OrthographicCamera &camera)
     {
 
         STUDY_PROFILE_FUNCTION();
@@ -177,30 +194,10 @@ namespace Study {
 
         STUDY_PROFILE_FUNCTION();
 
-        constexpr size_t quadVertexCount = 4;
-		const float textureIndex = 0.0f; // White Texture
-		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-		const float scale = 1.0f;
-
-        if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-            StartNewBatch();
-
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
             * glm::scale(glm::mat4{1.0f}, {size.x, size.y, 1.0f});
 
-		for (size_t i = 0; i < quadVertexCount; i++)
-		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
-			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr->Scale = scale;
-			s_Data.QuadVertexBufferPtr++;
-		}
-
-		s_Data.QuadIndexCount += 6;
-
-        s_Data.Stats.QuadCount++;
+        DrawQuad(transform, color);
 
     }
 
@@ -215,49 +212,10 @@ namespace Study {
     {
         STUDY_PROFILE_FUNCTION();
 
-        constexpr size_t quadVertexCount = 4;
-        constexpr glm::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f};
-        constexpr glm::vec2 textureCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
-
-        if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-            StartNewBatch();
-
-        float textureIndex = 0.0f;
-
-        for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
-        {
-
-            if(*s_Data.TextureSlots[i].get() == *texture.get())
-            {
-                textureIndex = (float)i;
-                break;
-            }
-
-        }
-
-        if(textureIndex == 0.0f)
-        {
-            textureIndex = (float)s_Data.TextureSlotIndex;
-            s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-            s_Data.TextureSlotIndex++;
-        }
-
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
             * glm::scale(glm::mat4{1.0f}, {size.x, size.y, 1.0f});
 
-       for (size_t i = 0; i < quadVertexCount; i++)
-		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
-			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr->Scale = texScale;
-			s_Data.QuadVertexBufferPtr++;
-		}
-
-		s_Data.QuadIndexCount += 6;
-
-        s_Data.Stats.QuadCount++;
+       DrawQuad(transform, texture, texScale, colorize);
 
     }
 
@@ -316,6 +274,83 @@ namespace Study {
 
         s_Data.Stats.QuadCount++;        
 
+
+    }
+
+    void Renderer2D::DrawQuad(const glm::mat4 &transform, const glm::vec4 &color)
+    {
+
+        STUDY_PROFILE_FUNCTION();
+
+        constexpr size_t quadVertexCount = 4;
+		const float textureIndex = 0.0f; // White Texture
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+		const float scale = 1.0f;
+
+        if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+            StartNewBatch();
+
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->Scale = scale;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+
+        s_Data.Stats.QuadCount++;
+
+    }
+
+    void Renderer2D::DrawQuad(const glm::mat4 &transform, const Shared<Texture2D> &texture, float texScale, const glm::vec4 &colorize)
+    {
+
+        STUDY_PROFILE_FUNCTION();
+
+        constexpr size_t quadVertexCount = 4;
+        constexpr glm::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f};
+        constexpr glm::vec2 textureCoords[] = {{0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f}};
+
+        if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+            StartNewBatch();
+
+        float textureIndex = 0.0f;
+
+        for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+        {
+
+            if(*s_Data.TextureSlots[i].get() == *texture.get())
+            {
+                textureIndex = (float)i;
+                break;
+            }
+
+        }
+
+        if(textureIndex == 0.0f)
+        {
+            textureIndex = (float)s_Data.TextureSlotIndex;
+            s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+            s_Data.TextureSlotIndex++;
+        }
+
+       for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->Scale = texScale;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+
+        s_Data.Stats.QuadCount++;
 
     }
 

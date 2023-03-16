@@ -62,6 +62,9 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "unordered_set": "cpp",
-        "glad.c": "cpp"
+        "glad.c": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }

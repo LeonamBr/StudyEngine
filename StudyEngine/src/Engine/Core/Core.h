@@ -31,7 +31,7 @@
 
 #define BIT(x) (1 << x)
 
-#define STUDY_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+#define STUDY_BIND_EVENT_FN(x) [this](auto&&... args) -> decltype(auto) { return this->x(std::forward<decltype(args)>(args)...); }
 
 namespace Study {
 

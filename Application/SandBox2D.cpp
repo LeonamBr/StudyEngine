@@ -18,6 +18,13 @@ void SandBox2D::OnAttach()
     
     ImGui::SetCurrentContext(Study::ImGuiLayer::GetContext());
 
+    m_Scene = Study::CreateShared<Study::Scene>();
+
+    auto square = m_Scene->CreateEntity("Red Square");
+    square.AddComponents<Study::SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
+    m_Camera = m_Scene->CreateEntity("Camera Entity");
+    m_Camera.AddComponents<Study::CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
     m_Texture = Study::Texture2D::Create("../Assets/2DTextures/testImage.png");
     m_Ghost = Study::Texture2D::Create("../Assets/2DTextures/testImage1.png");
     m_Background = Study::Texture2D::Create("../Assets/2DTextures/BlackWhiteBoard.png");
@@ -25,10 +32,11 @@ void SandBox2D::OnAttach()
     m_Marcus = Study::Texture2D::Create("../Assets/2DTextures/marcus.png");
     m_Nicholas = Study::Texture2D::Create("../Assets/2DTextures/nicholas.png");
     m_Sheet = Study::Texture2D::Create("../Assets/2DTextures/Pac-Man_Comparable_Sprite_Sheet.png");
+    m_Joao = Study::Texture2D::Create("../Assets/2DTextures/joao.png");
+
 
     m_PacmanSheet = Study::SubTexture2D::CreateFromCoords(m_Sheet, {1.0f, 9.0f}, {16.0f, 16.0f});
 
-    m_CameraController.SetZoomLevel(10.0f);
 
 }
 
@@ -58,19 +66,7 @@ void SandBox2D::OnUpdate(Study::Timer timestep)
     Study::RendererCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 	Study::RendererCommand::Clear();
 
-
-    Study::Renderer2D::BeginScene(m_CameraController.GetCamera());
-
-    Study::Renderer2D::DrawRotatedQuad({-5.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, -tsrotation, {0.0f, 0.0f, 1.0f, 1.0f});
-    Study::Renderer2D::DrawRotatedQuad({-4.5f, 0.5f, 0.0f}, {1.0f, 1.0f}, tsrotation, {1.0f, 0.0f, 0.0f, 1.0f});
-   
-    Study::Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {100.0f, 100.0f}, m_Background, 100.0f, glm::vec4({0.9f, 0.3f, 1.0f, 0.3f}));
-    Study::Renderer2D::DrawRotatedQuad({0.0, -8.0f}, {1.0f, 1.0f}, tsrotation ,m_Texture);
-    Study::Renderer2D::DrawRotatedQuad({0.0f, 0.0f}, {1.0f, 1.0f}, -tsrotation, m_Ghost);
-    Study::Renderer2D::DrawRotatedQuad({0.0f, -4.0f}, {1.0f, 1.0f}, tsrotation, m_PacmanSheet);
-    
-    Study::Renderer2D::EndScene();
-
+    m_Scene->OnUpdate(timestep);
 
 }
 

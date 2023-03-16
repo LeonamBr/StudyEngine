@@ -20,6 +20,10 @@
 #include "Engine/Renderer/Renderer2D.h"
 #include "Engine/Renderer/RendererCommand.h"
 
+#include "Engine/Scene/Scene.h"
+#include "Engine/Scene/Entity.h"
+#include "Engine/Scene/Components.h"
+
 #include "Engine/Renderer/Buffer.h"
 #include "Engine/Renderer/Shader.h"
 #include "Engine/Renderer/Texture.h"
