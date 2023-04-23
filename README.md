@@ -33,8 +33,9 @@ A game engine with learning pourpose
 ✅: Batch renderer textures  
 ✅: Rotation  
 ✅: Sprite sheets  
-✅: Tiles
-🕛: Enttity
+✅: Tiles  
+✅: Enttity  
+
 ...  
 
 planing new stuff  
