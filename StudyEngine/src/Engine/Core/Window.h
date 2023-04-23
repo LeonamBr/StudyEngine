@@ -14,7 +14,7 @@ namespace Study {
         unsigned int Width;
         unsigned int Height;
 
-        WindowProps(const std::string& title = "StudyEngine", unsigned int width = 1280, unsigned int height = 720)
+        WindowProps(const std::string& title = "StudyEngine", unsigned int width = 1600, unsigned int height = 900)
             : Title(title), Width(width), Height(height)
             {
 

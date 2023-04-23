@@ -27,9 +27,14 @@ class SandBox2D : public Study::Layer {
         Study::Shared<Study::Texture2D> m_Sheet;
         Study::Shared<Study::SubTexture2D> m_PacmanSheet;
         Study::Shared<Study::Scene> m_Scene;
+        Study::Shared<Study::Framebuffer> m_Frame;
+        Study::Entity m_Entity;
 
 
         glm::vec4 m_SquareColor = {1.0f, 0.0f, 0.0f, 1.0f};
+
+        bool m_ViewportFocused = false, m_ViewportHovered = false;
+		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 
         static float s_FPS;
         static float s_Time;

@@ -3,6 +3,7 @@
 
 #include "OrthographicCamera.h"
 #include "Camera.h"
+#include "../Scene/EditorCamera.h"
 
 #include "Texture.h"
 #include "SubTexture2D.h"
@@ -17,6 +18,7 @@ namespace Study {
             static void Shutdown();
 
             static void BeginScene(const Camera& camera, const glm::mat4& transform);
+            static void BeginScene(const EditorCamera& camera);
             static void BeginScene(const OrthographicCamera& camera);
             static void EndScene();
             static void Flush();

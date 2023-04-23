@@ -18,12 +18,19 @@ void SandBox2D::OnAttach()
     
     ImGui::SetCurrentContext(Study::ImGuiLayer::GetContext());
 
+    Study::FramebufferSpec fbSpec;
+	fbSpec.Width = 1280;
+	fbSpec.Height = 720;
+	m_Frame = Study::Framebuffer::Create(fbSpec);
+
     m_Scene = Study::CreateShared<Study::Scene>();
 
     auto square = m_Scene->CreateEntity("Red Square");
     square.AddComponents<Study::SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
     m_Camera = m_Scene->CreateEntity("Camera Entity");
-    m_Camera.AddComponents<Study::CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+    m_Camera.AddComponents<Study::CameraComponent>();
+    m_Entity = m_Scene->CreateEntity("Entity");
+    m_Scene->DeleteEntity(m_Entity);
 
     m_Texture = Study::Texture2D::Create("../Assets/2DTextures/testImage.png");
     m_Ghost = Study::Texture2D::Create("../Assets/2DTextures/testImage1.png");
@@ -37,6 +44,41 @@ void SandBox2D::OnAttach()
 
     m_PacmanSheet = Study::SubTexture2D::CreateFromCoords(m_Sheet, {1.0f, 9.0f}, {16.0f, 16.0f});
 
+    class CameraController : public Study::ScriptableEntity 
+    {
+
+        public:
+
+            void OnCreate()
+            {
+
+            }
+
+            void OnDestroy()
+            {
+
+            }
+
+            void OnUpdate(Study::Timer timeStep)
+            {
+
+                auto& transform = GetComponent<Study::TransformComponent>().Translation;
+                float speed = 5.0f;
+
+                if(Study::Input::IsKeyPressed(STUDY_KEY_A))
+                    transform.x -= speed * timeStep;
+                if(Study::Input::IsKeyPressed(STUDY_KEY_D))
+                    transform.x += speed * timeStep;
+                if(Study::Input::IsKeyPressed(STUDY_KEY_W))
+                    transform.y += speed * timeStep;
+                if(Study::Input::IsKeyPressed(STUDY_KEY_S))
+                    transform.y -= speed * timeStep;
+
+            }
+
+    };
+
+    m_Camera.AddComponents<Study::NativeScriptComponent>().Bind<CameraController>();
 
 }
 
@@ -57,7 +99,9 @@ void SandBox2D::OnUpdate(Study::Timer timestep)
 
     
     m_CameraController.OnUpdate(timestep);
+    m_Scene->OnViewportResize(Study::Application::Get().GetWindow().GetWidth(), Study::Application::Get().GetWindow().GetHeight());
     Study::Renderer2D::ResetStats();
+    m_Frame->Bind();
 
     static float tsrotation = 0.0f;
     tsrotation += timestep*50.0f;
@@ -68,10 +112,30 @@ void SandBox2D::OnUpdate(Study::Timer timestep)
 
     m_Scene->OnUpdate(timestep);
 
+    m_Frame->Unbind();
+
+
 }
 
 void SandBox2D::OnImGuiRender()
 {
+
+    if(ImGui::BeginMenuBar())
+    {
+
+        if(ImGui::BeginMenu("File"))
+        {
+            if(ImGui::MenuItem("Exit"))
+                STUDY_WARN("Cheguei");
+        
+            ImGui::EndMenu();
+        }
+
+
+        ImGui::EndMenuBar();
+    }
+
+    ImGui::ShowDemoWindow();
 
     ImGui::Begin("Renderer Stats");
 
@@ -82,8 +146,25 @@ void SandBox2D::OnImGuiRender()
     ImGui::Text("Quads: %d", stats.QuadCount);
     ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
     ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+    ImGui::Text("Window Width: %d  Window Height %d", Study::Application::Get().GetWindow().GetWidth(), Study::Application::Get().GetWindow().GetHeight());
 
     ImGui::End();
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+	ImGui::Begin("Viewport");
+
+	m_ViewportFocused = ImGui::IsWindowFocused();
+	m_ViewportHovered = ImGui::IsWindowHovered();
+	Study::Application::Get().GetImGuiLayer()->SetBlocklEvents(!m_ViewportFocused || !m_ViewportHovered);
+
+	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+	m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+
+	uint64_t textureID = m_Frame->GetColorAttachmentRendererID();
+    ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+	ImGui::End();
+	ImGui::PopStyleVar();
+
     
 }
 
