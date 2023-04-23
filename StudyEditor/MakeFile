@@ -1,0 +1,47 @@
+#compilers
+CC = g++
+
+#Derictories
+
+SRC = .
+EDITOR = ./Editor
+IMGUICFG = ./ImGuiConfiguration
+PANEL = ./Panels
+
+
+CPPFILES = $(foreach D, ${SRC}, $(wildcard $(D)/*.cpp)) $(foreach D, ${EDITOR}, $(wildcard $(D)/*.cpp)) $(foreach D, ${IMGUICFG}, $(wildcard $(D)/*.cpp)) $(foreach D, ${PANEL}, $(wildcard $(D)/*.cpp))
+
+#flags
+
+OBJFLAGS = -c -g -O0 -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -Dyaml_cpp_EXPORTS -std=c++20
+CPPOBJECTS = $(patsubst %.cpp, %.o, ${CPPFILES})
+EXTRAFLAGS = -Ofast
+
+#includes
+
+INCFILES = "-I./include" "-I../StudyEngine/include"
+
+#linking
+
+LINKDIR = "-L./lib" "-L./"
+DLLFLAGS = -W -O0 -DSTUDY_WINDOWS -DSTUDY_DLL_BUILD -DSTUDY_ENABLE_ASSERTS -Dyaml_cpp_EXPORTS -g -o
+LINKFLAGS = -lstudy
+OUTDIR = ./EditorEngine.exe
+
+all : ${OUTDIR}
+
+${OUTDIR}: ${CPPOBJECTS}
+	${CC} ${DLLFLAGS} $@ $^ ${LINKDIR} ${LINKFLAGS}
+
+%.o:%.cpp
+	${CC} ${OBJFLAGS} ${EXTRAFLAGS} ${INCFILES} -o $@ $<
+
+clean:
+	del /s .\*.o
+
+Executable:
+	echo "Criando Engine..."
+
+	g++ -W "-DSTUDY_DLL_BUILD" "-DSTUDY_ENABLE_ASSERTS" -std=c++20 "-Iinclude" "-Ilib" "-I..\\StudyEngine\\include" "*.cpp" "./Editor/*.cpp" "./ImGuiConfiguration/*.cpp" "./Panels/*.cpp" "-Llib"  -lstudy  -g -o studyEngine.exe 
+
+	echo "Build completa!!"
